@@ -1,6 +1,9 @@
 package com.cursoAndroid.firstproject
 
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -17,4 +20,11 @@ class MainActivity : AppCompatActivity() {
             insets
         }
     }
+
+    fun sortear(view: View){
+        val random = (0..100).random()
+        val textoResultado = findViewById<TextView>(R.id.resultado)
+        textoResultado.text = "Número sorteado: $random"
+    }
+
 }
