@@ -1,6 +1,7 @@
 package com.jesse.pedrapapeltesoura;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
@@ -27,7 +28,15 @@ public class MainActivity extends AppCompatActivity {
         verificarGanhador("pedra");
     }
 
-    private void verificarGanhador(String escolhaUsuario){
+    public void selecionarPapel(View view ){
+        verificarGanhador("papel");
+    }
 
+    public void selecionarTesoura(View view ){
+        verificarGanhador("tesoura");
+    }
+
+    private void verificarGanhador(String escolhaUsuario){
+       Log.d("escolhaUsuario", escolhaUsuario);
     }
 }

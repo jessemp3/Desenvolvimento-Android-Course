@@ -64,6 +64,7 @@
         android:layout_height="120dp"
         android:layout_margin="8dp"
         android:src="@drawable/papel"
+        android:onClick="selecionarPapel"
         app:layout_constraintEnd_toStartOf="@id/tesoura"
         app:layout_constraintStart_toEndOf="@id/pedra"
         app:layout_constraintTop_toBottomOf="@+id/EscolhaOpcao" />
@@ -74,6 +75,7 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_margin="8dp"
+        android:onClick="selecionarTesoura"
         android:src="@drawable/tesoura"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/papel"
