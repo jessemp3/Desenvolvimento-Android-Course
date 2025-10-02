@@ -50,6 +50,7 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_margin="8dp"
+        android:onClick="selecionarPedra"
         android:src="@drawable/pedra"
         app:layout_constraintEnd_toStartOf="@id/papel"
         app:layout_constraintHorizontal_chainStyle="spread"
