@@ -3,6 +3,7 @@ package com.jesse.pedrapapeltesoura;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,6 +38,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void verificarGanhador(String escolhaUsuario){
+        String escolhaComputador = gerarEscolhaComputador();
+
        Log.d("escolhaUsuario", escolhaUsuario);
     }
+
+    private String gerarEscolhaComputador() {
+        String[] opcoes = {"pedra", "papel", "tesoura"};
+        int numero = (int) (Math.random() * 3);
+
+        String escolhaComputador = opcoes[numero];
+
+        ImageView view = findViewById(R.id.padrao);
+        switch (escolhaComputador){
+            case "pedra":
+                view.setImageResource(R.drawable.pedra);
+                Log.d("escolhaComputador", "pedra");
+                break;
+            case "papel":
+                view.setImageResource(R.drawable.papel);
+                Log.d("escolhaComputador", "papel");
+                break;
+            case "tesoura":
+                view.setImageResource(R.drawable.tesoura);
+                Log.d("escolhaComputador", "tesoura");
+                break;
+
+        }
+
+        return escolhaComputador;
+    }
+
+
 }
