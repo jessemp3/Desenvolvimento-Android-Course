@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,22 +26,37 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void selecionarPedra(View view ){
+    public void selecionarPedra(View view) {
         verificarGanhador("pedra");
     }
 
-    public void selecionarPapel(View view ){
+    public void selecionarPapel(View view) {
         verificarGanhador("papel");
     }
 
-    public void selecionarTesoura(View view ){
+    public void selecionarTesoura(View view) {
         verificarGanhador("tesoura");
     }
 
-    private void verificarGanhador(String escolhaUsuario){
+    private void verificarGanhador(String escolhaUsuario) {
         String escolhaComputador = gerarEscolhaComputador();
+        TextView text = findViewById(R.id.resultado);
 
-       Log.d("escolhaUsuario", escolhaUsuario);
+        if (
+            (escolhaComputador == "pedra" && escolhaUsuario == "tesoura") ||
+            (escolhaComputador == "papel" && escolhaUsuario == "pedra") ||
+            (escolhaComputador == "tesoura" && escolhaUsuario == "papel")
+        ) { // app ganha
+            text.setText("Você perdeu! :(");
+        } else if (
+            (escolhaUsuario == "pedra" && escolhaComputador == "tesoura") ||
+            (escolhaUsuario == "papel" && escolhaComputador == "pedra") ||
+            (escolhaUsuario == "tesoura" && escolhaComputador == "papel")
+        ) { // user ganha
+            text.setText("Você ganhou! :)");
+        } else { // empate
+            text.setText("Empatamos! :|");
+        }
     }
 
     private String gerarEscolhaComputador() {
@@ -50,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         String escolhaComputador = opcoes[numero];
 
         ImageView view = findViewById(R.id.padrao);
-        switch (escolhaComputador){
+        switch (escolhaComputador) {
             case "pedra":
                 view.setImageResource(R.drawable.pedra);
                 Log.d("escolhaComputador", "pedra");

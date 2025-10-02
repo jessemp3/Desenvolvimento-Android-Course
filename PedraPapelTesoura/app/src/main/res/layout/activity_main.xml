@@ -83,7 +83,7 @@
 
 
     <TextView
-        android:id="@+id/Resultado"
+        android:id="@+id/resultado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
