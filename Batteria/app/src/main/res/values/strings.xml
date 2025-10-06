@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Batteria</string>
+    <string name="label_battery">%1$d%%</string>
+</resources>
