@@ -22,7 +22,6 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 
 import com.jesse.batteria.MainActivity;
-import com.jesse.batteria.R;
 
 public class BatteryService extends Service {
     private static final String CHANNEL_ID = "monitor_bateria_channel";
@@ -38,7 +37,6 @@ public class BatteryService extends Service {
 
         createNotificationChannel();
 
-        // Inicia como foreground (necessário para Android 8+)
         startForeground(NOTIF_ID_FOREGROUND, buildForegroundNotification());
 
         // Cria e registra o receiver que monitora a bateria
@@ -74,7 +72,7 @@ public class BatteryService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null; // Não precisa de binding
+        return null;
     }
 
     private Notification buildForegroundNotification() {
@@ -99,7 +97,6 @@ public class BatteryService extends Service {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(android.R.drawable.ic_dialog_info)
                 .setContentTitle("Bateria em " + level + "% 🔋")
-                .setContentText("A carga da bateria chegou a " + level + "%.")
                 .setContentText("Coloque o celular para carregar")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true);
@@ -122,7 +119,6 @@ public class BatteryService extends Service {
             );
             channel.setDescription("Notificações do serviço de monitoramento de bateria");
             channel.enableVibration(true); // vibração
-            channel.enableLights(true);    // led do dispositivo
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
         }
