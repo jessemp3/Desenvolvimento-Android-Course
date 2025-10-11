@@ -12,10 +12,11 @@
         android:id="@+id/imageView"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/textViewSeries"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo" />
-
 
     <TextView
         android:id="@+id/textViewSeries"
@@ -23,10 +24,10 @@
         android:layout_height="wrap_content"
         android:text="Séries"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@id/textViewFilmes"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@id/imageView"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toStartOf="@+id/textViewFilmes"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
 
     <TextView
         android:id="@+id/textViewFilmes"
@@ -34,10 +35,10 @@
         android:layout_height="wrap_content"
         android:text="Filmes"
         android:textColor="@color/white"
-        app:layout_constraintStart_toEndOf="@id/textViewSeries"
-        app:layout_constraintStart_toStartOf="@+id/textViewSeries"
-        app:layout_constraintEnd_toEndOf="@id/textViewMinhaLista"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toStartOf="@+id/textViewMinhaLista"
+        app:layout_constraintStart_toEndOf="@+id/textViewSeries"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
 
     <TextView
         android:id="@+id/textViewMinhaLista"
@@ -45,10 +46,35 @@
         android:layout_height="wrap_content"
         android:text="Minha lista"
         android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/textViewFilmes"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/textViewFilmes"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
 
+    <ImageView
+        android:id="@+id/imageViewLogoPeaky"
+        android:layout_width="87dp"
+        android:layout_height="71dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        app:srcCompat="@drawable/logo_peaky" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
