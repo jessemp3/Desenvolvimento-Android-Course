@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+<!--    netflix-->
+    <color name="primary">#e70001</color>
+    <color name="primaryVariant">#AA0407</color>
+    <color name="secondary">#f70000</color>
+    <color name="fundo">#171417</color>
+
+
+</resources>
