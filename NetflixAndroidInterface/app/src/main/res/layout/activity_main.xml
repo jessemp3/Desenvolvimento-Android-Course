@@ -76,5 +76,60 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.25" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Violencia"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewEmpolgante"
+        app:layout_constraintEnd_toStartOf="@+id/textViewEmpolgante"
+        app:layout_constraintStart_toStartOf="@id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/textViewEmpolgante" />
+
+    <TextView
+        android:id="@+id/textViewEmpolgante"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Empolgante"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@+id/textView3"
+        android:layout_marginTop="6dp"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sinistro"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewEmpolgante"
+        app:layout_constraintEnd_toEndOf="@id/guideline4"
+        app:layout_constraintStart_toEndOf="@+id/textViewEmpolgante"
+        app:layout_constraintTop_toTopOf="@+id/textViewEmpolgante" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.8" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Assisitir"
+        tools:layout_editor_absoluteX="160dp"
+        tools:layout_editor_absoluteY="227dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
