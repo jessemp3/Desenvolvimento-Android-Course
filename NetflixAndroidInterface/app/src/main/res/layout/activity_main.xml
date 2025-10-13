@@ -7,12 +7,21 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/imageViewCapa"
+        android:layout_width="0dp"
+        android:layout_height="311dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/capa" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="22dp"
         app:layout_constraintEnd_toStartOf="@+id/textViewSeries"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -57,7 +66,6 @@
         android:layout_height="71dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline"
         app:srcCompat="@drawable/logo_peaky" />
@@ -67,7 +75,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.1" />
+        app:layout_constraintGuide_percent="0.10123119" />
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -91,10 +100,10 @@
         android:id="@+id/textViewEmpolgante"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
         android:text="Empolgante"
         android:textColor="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/textView3"
-        android:layout_marginTop="6dp"
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
@@ -114,22 +123,99 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.2" />
+        app:layout_constraintGuide_percent="0.1" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.8" />
+        app:layout_constraintGuide_percent="0.9" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonAssistir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Assisitir"
-        tools:layout_editor_absoluteX="160dp"
-        tools:layout_editor_absoluteY="227dp" />
+        android:layout_marginTop="22dp"
+        android:drawableLeft="@drawable/ic_executar_24"
+        android:text="Assistir"
+        app:iconPadding="0dp"
+        app:layout_constraintEnd_toStartOf="@+id/buttonDetalhes"
+        app:layout_constraintStart_toEndOf="@+id/buttonMinhaLista"
+        app:layout_constraintTop_toBottomOf="@+id/textViewEmpolgante" />
+
+    <Button
+        android:id="@+id/buttonMinhaLista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/transparent"
+        android:drawableTop="@drawable/ic_add"
+        android:padding="0dp"
+        android:text="Minha lista"
+        android:textSize="10sp"
+        app:iconPadding="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonAssistir"
+        app:layout_constraintEnd_toStartOf="@+id/buttonAssistir"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="@id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/buttonAssistir" />
+
+    <Button
+        android:id="@+id/buttonDetalhes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/transparent"
+        android:drawableTop="@drawable/ic_info"
+        android:padding="0dp"
+        android:text="Detalhes"
+        android:textSize="10sp"
+        app:iconPadding="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonAssistir"
+        app:layout_constraintEnd_toEndOf="@id/guideline4"
+        app:layout_constraintStart_toEndOf="@+id/buttonAssistir"
+        app:layout_constraintTop_toTopOf="@+id/buttonAssistir" />
+
+    <TextView
+        android:id="@+id/textViewLancamentos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Lançamentos"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="@id/guideline3"
+        app:layout_constraintTop_toBottomOf="@+id/buttonAssistir" />
+
+    <ImageView
+        android:id="@+id/imageViewFilme1"
+        android:layout_width="87dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@id/imageViewFilme2"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toBottomOf="@id/textViewLancamentos"
+        app:srcCompat="@drawable/f1" />
+
+    <ImageView
+        android:id="@+id/imageViewFilme2"
+        android:layout_width="87dp"
+        android:layout_height="56dp"
+        app:layout_constraintBottom_toBottomOf="@id/imageViewFilme1"
+        app:layout_constraintEnd_toStartOf="@id/imageViewFilme3"
+        app:layout_constraintStart_toEndOf="@+id/imageViewFilme1"
+        app:layout_constraintTop_toTopOf="@id/imageViewFilme1"
+        app:srcCompat="@drawable/f2" />
+
+    <ImageView
+        android:id="@+id/imageViewFilme3"
+        android:layout_width="87dp"
+        android:layout_height="56dp"
+        app:layout_constraintBottom_toBottomOf="@id/imageViewFilme1"
+        app:layout_constraintEnd_toEndOf="@id/guideline4"
+        app:layout_constraintStart_toEndOf="@id/imageViewFilme2"
+        app:layout_constraintTop_toTopOf="@id/imageViewFilme1"
+        app:srcCompat="@drawable/f3"
+        tools:layout_editor_absoluteY="346dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
