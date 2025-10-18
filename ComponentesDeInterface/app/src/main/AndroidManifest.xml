@@ -13,6 +13,10 @@
         android:theme="@style/Theme.ComponentesDeInterface">
         <activity
             android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OrientacaoActivity"
+            android:screenOrientation="fullSensor"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
