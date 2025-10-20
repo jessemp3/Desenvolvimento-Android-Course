@@ -16,7 +16,6 @@
             android:exported="false" />
         <activity
             android:name=".OrientacaoActivity"
-            android:screenOrientation="fullSensor"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
