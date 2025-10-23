@@ -16,5 +16,8 @@ fun main (){
     carro?.acelerar()
     val cor = carro?.cor ?: "preto"
 
+//    ? -> operador seguro
+//    ?: -> operador Elvis
+
     println("A cor do carro é $cor")
 }
