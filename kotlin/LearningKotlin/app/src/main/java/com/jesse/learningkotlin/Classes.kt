@@ -7,5 +7,10 @@ class Classes {
 }
 
 fun main() {
+    val mario = Classes()
+    mario.kart = "Standard Kart"
+    mario.speed = 150
+    mario.planador = "Super Glider"
 
+    println("Mario's Kart: ${mario.kart} with speed ${mario.speed} and planador ${mario.planador}")
 }
