@@ -10,7 +10,7 @@
 
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageViewLogo"
         android:layout_width="0dp"
         android:layout_height="200dp"
         android:layout_marginHorizontal="16dp"
@@ -21,31 +21,33 @@
         />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Saiba a mlehor opção para abastecimento do seu carro"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageView" />
+        app:layout_constraintTop_toBottomOf="@id/imageViewLogo" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputLayout1"
+        android:id="@+id/inputLayoutAlcohol"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:layout_marginHorizontal="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle">
 
 
         <EditText
+            android:id="@+id/editTextAlcohol"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Preço do álcool ex: 1,90"
             android:inputType="number|numberDecimal"
+
             />
 
 
@@ -54,17 +56,18 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputLayout2"
+        android:id="@+id/inputLayoutGasoline"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputLayout1">
+        app:layout_constraintTop_toBottomOf="@+id/inputLayoutAlcohol">
 
 
         <EditText
+            android:id="@+id/editTextGasoline"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Preço da gasolina ex: 2,90"
@@ -81,7 +84,7 @@
         android:layout_height="wrap_content"
         android:text="Calcular"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/inputLayout2"
+        app:layout_constraintTop_toBottomOf="@id/inputLayoutGasoline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
