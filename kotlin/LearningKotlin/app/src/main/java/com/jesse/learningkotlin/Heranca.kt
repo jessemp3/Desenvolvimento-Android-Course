@@ -1,14 +1,14 @@
 package com.jesse.learningkotlin
 
 
-open class Animal {// classe pai ou superclasse
+abstract class Animal {// classe pai ou superclasse , abstract impede a instanciação direta da classe
     var cor:String = "Preto"
     var tamanho:String = ""
     var peso: Double = 0.0
 
 
    open fun correr() = println("está correndo")
-    fun dormir() = println("está dormindo")
+   abstract  fun dormir()  // metodo abstrato, obrigatorio a implementação nas classes filhas
 }
 
 class Cachorro: Animal() {// classe filha ou subclasse
@@ -17,6 +17,10 @@ class Cachorro: Animal() {// classe filha ou subclasse
     override fun correr() {
         print("o cachorro ")
         super.correr()
+    }
+
+    override fun dormir() {
+        println("o cachorro está dormindo")
     }
 }
 
@@ -27,6 +31,10 @@ class passaro: Animal() {
     override fun correr() {
         print("o pássaro ")
         super.correr()
+    }
+
+    override fun dormir() {
+        println("o pássaro está dormindo")
     }
 }
 
