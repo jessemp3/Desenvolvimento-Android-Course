@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
         }
         inicializarComponentes()
         binding.buttonCalculate.setOnClickListener {
-            Toast.makeText(this , "Calculando...", Toast.LENGTH_SHORT).show()
             calculandoPreco()
         }
 
@@ -41,10 +40,10 @@ class MainActivity : AppCompatActivity() {
 
         val resultValidaction = validarCampos(precoAlcool, precoGasolina)
         if(resultValidaction){
-            val valorAlcool = precoAlcool.toDouble()
-            val valorGasolina = precoGasolina.toDouble()
+            val valorAlcoolConvertido = precoAlcool.toDouble()
+            val valorGasolinaConvertido = precoGasolina.toDouble()
 
-            val resultadoPreco = valorAlcool / valorGasolina
+            val resultadoPreco = valorAlcoolConvertido / valorGasolinaConvertido
 
             if (resultadoPreco >= 0.7) {
                 binding.textViewResult.text = "Melhor utilizar Gasolina"
