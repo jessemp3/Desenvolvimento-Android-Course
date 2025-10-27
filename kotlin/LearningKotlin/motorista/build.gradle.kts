@@ -4,13 +4,13 @@ plugins {
 }
 
 android {
-    namespace = "com.jesse.learningkotlin"
+    namespace = "com.jesse.motorista"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "com.jesse.learningkotlin"
+        applicationId = "com.jesse.motorista"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
@@ -43,6 +43,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(project(":recursos"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

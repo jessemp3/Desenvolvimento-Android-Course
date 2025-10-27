@@ -20,4 +20,6 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "LearningKotlin"
-include(":app")
+include(":passageiro")
+include(":motorista")
+include(":recursos")
