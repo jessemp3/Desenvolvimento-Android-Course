@@ -1,20 +1,19 @@
-package com.jesse.activityfragment
+ package com.jesse.activityfragment
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.jesse.activityfragment.databinding.ActivityMainBinding
+import com.jesse.activityfragment.databinding.ActivityDetalhesBinding
 
-class MainActivity : AppCompatActivity(){
-    lateinit var binding: ActivityMainBinding
+ class DetalhesActivity : AppCompatActivity() {
+    lateinit var binding: ActivityDetalhesBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityDetalhesBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -22,9 +21,8 @@ class MainActivity : AppCompatActivity(){
             insets
         }
 
-        binding.buttonAbrir.setOnClickListener {
-            val intent = Intent(this , DetalhesActivity::class.java)
-            startActivity(intent)
+        binding.buttonVoltar.setOnClickListener {
+            finish()
         }
     }
 }
