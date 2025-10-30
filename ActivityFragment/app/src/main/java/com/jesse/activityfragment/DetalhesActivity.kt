@@ -29,10 +29,12 @@ class DetalhesActivity : AppCompatActivity() {
 //        binding.textViewName.text = "$name and $age"
 
 
-      val filme =  if(Build.VERSION.SDK_INT >= 33 ){
-           intent.getSerializableExtra("filme", Filme::class.java)!!
+      val filme =  if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){ // pegar pelo nome é mior (33)
+//           intent.getSerializableExtra("filme", Filme::class.java)!!
+          intent.getParcelableExtra<Filme>("filme", Filme::class.java)
         }else{
-            intent.getSerializableExtra("filme") as Filme
+//            intent.getSerializableExtra("filme") as Filme
+            intent.getParcelableExtra<Filme>("filme")
         }
 
         binding.textViewName.text = "${filme?.nome} - ${filme?.description} - ${filme?.avaliacoes} - ${filme?.diretor} - ${filme?.distribuidora} - ${filme?.anoLancamento}"
