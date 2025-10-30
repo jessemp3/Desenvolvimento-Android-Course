@@ -24,6 +24,24 @@ class MainActivity : AppCompatActivity(){
 
         binding.buttonAbrir.setOnClickListener {
             val intent = Intent(this , DetalhesActivity::class.java)
+
+            val filme: Filme = Filme(
+                nome = "Taxi Driver",
+                description = "Um veterano da Guerra do Vietnã trabalha como motorista de táxi em Nova York." +
+                        " Perturbado pela decadência moral que o cerca, ele planeja um ato violento para 'salvar' uma jovem prostituta.",
+                avaliacoes = 8.3,
+                diretor = "Martin Scorsese",
+                distribuidora = "Columbia Pictures",
+                anoLancamento = 1976
+            )
+
+
+            intent.putExtra("filme",filme)
+
+            // passar parametro pra outra activity
+            intent.putExtra("name", "Jesse")
+            intent.putExtra("age", 20)
+
             startActivity(intent)
         }
     }
