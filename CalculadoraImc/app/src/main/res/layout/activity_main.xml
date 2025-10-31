@@ -64,6 +64,7 @@
 
 
     <TextView
+        android:id="@+id/textViewDica"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Digite o '.' para casas decimais"
@@ -72,5 +73,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
+
+    <Button
+        android:id="@+id/buttonCalcular"
+        style="@style/Widget.Material3.Button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Calcular IMC"
+        app:cornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewDica" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
