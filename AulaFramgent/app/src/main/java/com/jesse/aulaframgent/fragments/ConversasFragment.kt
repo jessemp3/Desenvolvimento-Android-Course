@@ -13,10 +13,12 @@ class ConversasFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate( // inflando o layout do fragment
+        val view = inflater.inflate( // inflando o layout do fragment
             com.jesse.aulaframgent.R.layout.fragment_conversas,
             container,
             false
         )
+
+        return view
     }
 }
