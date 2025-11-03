@@ -5,20 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.jesse.aulaframgent.databinding.FragmentConversasBinding
 
 class ConversasFragment : Fragment() {
+    private lateinit var binding: FragmentConversasBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate( // inflando o layout do fragment
-            com.jesse.aulaframgent.R.layout.fragment_conversas,
-            container,
-            false
-        )
+        binding = FragmentConversasBinding.inflate(inflater, container, false)
 
-        return view
+        val nome = binding.editTextText.text
+        binding.buttonSubmit.setOnClickListener {
+            binding.textViewResult.text = nome
+        }
+
+        return binding.root
     }
 }
