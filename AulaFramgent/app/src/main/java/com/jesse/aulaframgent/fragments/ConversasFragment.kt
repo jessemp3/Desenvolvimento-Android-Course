@@ -9,6 +9,12 @@ import com.jesse.aulaframgent.databinding.FragmentConversasBinding
 
 class ConversasFragment : Fragment() {
     private lateinit var binding: FragmentConversasBinding
+    private var categoria:String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        categoria = arguments?.getString("categoria")
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -18,6 +24,7 @@ class ConversasFragment : Fragment() {
         binding = FragmentConversasBinding.inflate(inflater, container, false)
 
         val nome = binding.editTextText.text
+        binding.textViewCategory.text = categoria
         binding.buttonSubmit.setOnClickListener {
             binding.textViewResult.text = nome
         }

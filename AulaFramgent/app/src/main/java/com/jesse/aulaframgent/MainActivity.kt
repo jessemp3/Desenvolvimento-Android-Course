@@ -35,12 +35,18 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.button.setOnClickListener {
+            val conversasFragment = ConversasFragment()
+
+            conversasFragment.arguments = Bundle().apply {
+                putString("categoria", "Conversas do jesse")
+            }
+
             //forma simplificada
             supportFragmentManager
                 .beginTransaction()
                 .replace(
                     R.id.fragmentContainerView,
-                    ConversasFragment()
+                    conversasFragment
                 ) // o metodo add simplismente colocar na tela , se já tiver aberto um fragment ele sobrepõe, o melhor é usar o replace que substitui
                 .commit()
         }
@@ -54,10 +60,6 @@ class MainActivity : AppCompatActivity() {
                 )
                 .commit()
         }
-
-
-
-
 
     }
 }
