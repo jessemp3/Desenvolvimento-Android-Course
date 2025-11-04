@@ -11,8 +11,10 @@ class ConversasFragment : Fragment() {
     private lateinit var binding: FragmentConversasBinding
     private var categoria:String? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // recuperando os parametros passados pela activity
         categoria = arguments?.getString("categoria")
     }
 

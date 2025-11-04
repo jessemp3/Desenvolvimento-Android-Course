@@ -3,8 +3,11 @@ package com.jesse.aulaframgent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import com.jesse.aulaframgent.databinding.ActivityMainBinding
 import com.jesse.aulaframgent.fragments.ChamadasFragment
 import com.jesse.aulaframgent.fragments.ConversasFragment
@@ -35,20 +38,34 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.button.setOnClickListener {
-            val conversasFragment = ConversasFragment()
+//            val conversasFragment = ConversasFragment()
 
-            conversasFragment.arguments = Bundle().apply {
-                putString("categoria", "Conversas do jesse")
-            }
+            // passando parametros de uma activity para um fragment
+//          val bundle = conversasFragment.arguments = Bundle().apply {
+//                putString("categoria", "Conversas do jesse")
+//            }
 
-            //forma simplificada
-            supportFragmentManager
-                .beginTransaction()
-                .replace(
+            //forma simplificada e normal
+//            supportFragmentManager
+//                .beginTransaction()
+//                .replace(
+//                    R.id.fragmentContainerView,
+//                    conversasFragment
+//                ) // o metodo add simplismente colocar na tela , se já tiver aberto um fragment ele sobrepõe, o melhor é usar o replace que substitui
+//                .commit()
+
+            val bundle = bundleOf(
+                "categoria" to "Conversas do Jesse"
+            )
+
+            // usando o fragment KTX
+            supportFragmentManager.commit {
+                replace<ConversasFragment>(
                     R.id.fragmentContainerView,
-                    conversasFragment
-                ) // o metodo add simplismente colocar na tela , se já tiver aberto um fragment ele sobrepõe, o melhor é usar o replace que substitui
-                .commit()
+                    args = bundle,
+
+                )
+            }
         }
 
         binding.button2.setOnClickListener {
