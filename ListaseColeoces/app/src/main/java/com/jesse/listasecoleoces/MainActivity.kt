@@ -1,6 +1,7 @@
 package com.jesse.listasecoleoces
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -24,15 +25,24 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        btnExecutar.findViewById<Button>(R.id.button)
-        textResultado.findViewById<TextView>(R.id.textView)
-//
-//        btnExecutar.setOnClickListener {
-//            textResultado.text = "jesse"
-//        }
+    btnExecutar = findViewById<Button>(R.id.button)
+    textResultado = findViewById<TextView>(R.id.textView)
+
+
+        // função lambda
+        val funcao = { nome: String ->
+            Log.d("Função lambda", "$nome" )
+        }
+
+        btnExecutar.setOnClickListener {
+            textResultado.text = "jesse"
+            funcao("jesse")
+        }
     }
 
-    fun cliqueButao(view: View){
-        textResultado.text = "jesse"
-    }
+//    fun cliqueButao(view: View){
+//        textResultado.text = "jesse"
+//    }
+
+
 }
