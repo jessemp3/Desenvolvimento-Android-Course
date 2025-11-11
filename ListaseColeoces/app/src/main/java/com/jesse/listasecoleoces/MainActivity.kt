@@ -2,9 +2,11 @@ package com.jesse.listasecoleoces
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -36,8 +38,20 @@ class MainActivity : AppCompatActivity() {
 
         btnExecutar.setOnClickListener {
             textResultado.text = "jesse"
+
+          val toast = Toast.makeText(
+                this,
+                "Botão clicado" ,
+                Toast.LENGTH_LONG
+            )
+            // seria um forma de fazer um toast na parte superiro , mas não funciona em apis mais novas
+            toast.setGravity(Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, 150)
+            toast.show()
+
+
             funcao("jesse")
         }
+
     }
 
 //    fun cliqueButao(view: View){
