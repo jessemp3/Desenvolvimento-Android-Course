@@ -35,5 +35,8 @@ fun union(){
 // asc -> ascedente
 // desc -> descendente
 fun ordenacao(){
+    val alfabaeto = listOf("a" , "z" ,"k" , "b")
+    val numeros = listOf(1,4,5,2,7,8,25)
 
+    alfabaeto.sorted()
 }
