@@ -5,7 +5,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.jesse.listasecoleoces.R
 import com.jesse.listasecoleoces.databinding.ActivityRecyclerBinding
 import com.jesse.listasecoleoces.reciclerView.repository.Mensagem
@@ -38,6 +40,11 @@ class RecyclerActivity : AppCompatActivity() {
         )
 
         binding.recyclerView.adapter = MensagemAdapter(lista)
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+//        binding.recyclerView2.adapter = MensagemAdapter(lista)
+
+    // possivel fazer essa config via xml ou por aqui (code)
+        binding.recyclerView.layoutManager = LinearLayoutManager(this , LinearLayoutManager.HORIZONTAL , false)
+//        binding.recyclerView2.layoutManager = GridLayoutManager(this , 2)
+//        binding.recyclerView.layoutManager = StaggeredGridLayoutManager(2 , StaggeredGridLayoutManager.VERTICAL)
     }
 }

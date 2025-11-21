@@ -18,4 +18,21 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="13"
         tools:listitem="@layout/item_lista" />
+
+<!--    app:spanCount=""-->
+<!--    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/recycler_view2"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_margin="16dp"-->
+<!--        android:layout_marginTop="32dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/recycler_view"-->
+<!--        tools:itemCount="13"-->
+<!--        tools:listitem="@layout/item_lista" />-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>
