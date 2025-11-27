@@ -28,7 +28,7 @@ class RecyclerActivity : AppCompatActivity() {
 
         val lista = listOf(
           Mensagem(R.drawable.perfil, "kaique", "Olá, como vai?", "08:15"),
-          Mensagem(R.drawable.perfil, "jesse", "Vamos almoçar?", "09:30"),
+          Mensagem(R.drawable.perfil, "jesse", "Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?", "09:30"),
           Mensagem(R.drawable.perfil, "cice", "Encontro às 14h", "11:45"),
           Mensagem(R.drawable.perfil, "alice", "Obrigada!", "13:05"),
           Mensagem(R.drawable.perfil, "mariana", "Vou chegar tarde", "15:20"),
@@ -43,8 +43,9 @@ class RecyclerActivity : AppCompatActivity() {
 //        binding.recyclerView2.adapter = MensagemAdapter(lista)
 
     // possivel fazer essa config via xml ou por aqui (code)
-        binding.recyclerView.layoutManager = LinearLayoutManager(this , LinearLayoutManager.HORIZONTAL , false)
-//        binding.recyclerView2.layoutManager = GridLayoutManager(this , 2)
-//        binding.recyclerView.layoutManager = StaggeredGridLayoutManager(2 , StaggeredGridLayoutManager.VERTICAL)
+//        binding.recyclerView.layoutManager = LinearLayoutManager(this , LinearLayoutManager.VERTICAL , false)
+//        binding.recyclerView.layoutManager = GridLayoutManager(this , 2)
+        binding.recyclerView.layoutManager = StaggeredGridLayoutManager(2 , StaggeredGridLayoutManager.VERTICAL)
+        binding.recyclerView.clipToPadding = false
     }
 }
