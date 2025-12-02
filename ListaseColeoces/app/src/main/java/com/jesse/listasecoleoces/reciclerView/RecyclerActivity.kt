@@ -1,10 +1,12 @@
 package com.jesse.listasecoleoces.reciclerView
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -39,13 +41,20 @@ class RecyclerActivity : AppCompatActivity() {
           Mensagem(R.drawable.perfil, "sofia", "racaoo", "20:55")
         )
 
-        binding.recyclerView.adapter = MensagemAdapter(lista)
+        binding.recyclerView.adapter = MensagemAdapter(lista){ nome ->
+            Toast.makeText(this, nome, Toast.LENGTH_SHORT).show()
+        }
 //        binding.recyclerView2.adapter = MensagemAdapter(lista)
 
     // possivel fazer essa config via xml ou por aqui (code)
-//        binding.recyclerView.layoutManager = LinearLayoutManager(this , LinearLayoutManager.VERTICAL , false)
+        binding.recyclerView.layoutManager = LinearLayoutManager(this , LinearLayoutManager.VERTICAL , false)
+
+        // criação de um divisor
+        binding.recyclerView.addItemDecoration(DividerItemDecoration(this , DividerItemDecoration.VERTICAL))
+
+
 //        binding.recyclerView.layoutManager = GridLayoutManager(this , 2)
-        binding.recyclerView.layoutManager = StaggeredGridLayoutManager(2 , StaggeredGridLayoutManager.VERTICAL)
-        binding.recyclerView.clipToPadding = false
+//        binding.recyclerView.layoutManager = StaggeredGridLayoutManager(2 , StaggeredGridLayoutManager.VERTICAL)
+//        binding.recyclerView.clipToPadding = false
     }
 }

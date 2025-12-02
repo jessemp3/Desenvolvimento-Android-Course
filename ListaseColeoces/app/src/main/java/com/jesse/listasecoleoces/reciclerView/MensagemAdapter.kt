@@ -1,17 +1,20 @@
 package com.jesse.listasecoleoces.reciclerView
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.jesse.listasecoleoces.R
 import com.jesse.listasecoleoces.reciclerView.repository.Mensagem
 
 class MensagemAdapter(
-    private val lista: List<Mensagem>
+    private val lista: List<Mensagem>,
+    private val clique: (String) -> Unit // pra poder fazer evento direto na activity
 ) : Adapter<MensagemAdapter.MensagemViewHolder>() {
 
     inner class MensagemViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
@@ -19,6 +22,18 @@ class MensagemAdapter(
         val textNome: TextView = view.findViewById(R.id.textViewCardName)
         val textMensagem: TextView = view.findViewById(R.id.textViewCardMessage)
 //        val textHora: TextView = view.findViewById(R.id.textHora)
+
+
+
+        fun bind(mensagem: Mensagem){
+            //pegando o contexto do item
+//            val contextImage = imagePerfil.context
+            imagePerfil.setOnClickListener {
+                clique(mensagem.nome)
+            }
+
+
+        }
     }
 
 
@@ -51,6 +66,10 @@ class MensagemAdapter(
         holder.textMensagem.text = mensagem.ultima
 //        holder.textHora.text = mensagem.hora
         holder.imagePerfil.setImageResource(mensagem.imagem)
+
+        // aqui que os eventos de clique acontececem
+        holder.bind(mensagem)
+
 
     }
 
