@@ -1,6 +1,7 @@
 package com.jesse.listasecoleoces.reciclerView
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.jesse.listasecoleoces.R
 import com.jesse.listasecoleoces.databinding.ActivityRecyclerBinding
 import com.jesse.listasecoleoces.reciclerView.repository.Mensagem
@@ -29,7 +31,7 @@ class RecyclerActivity : AppCompatActivity() {
             insets
         }
 
-        val lista = listOf( // conjunto de dados -> dataset
+        val lista = mutableListOf( // conjunto de dados -> dataset
           Mensagem(R.drawable.perfil, "kaique", "Olá, como vai?", "08:15"),
           Mensagem(R.drawable.perfil, "jesse", "Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?", "09:30"),
           Mensagem(R.drawable.perfil, "cice", "Encontro às 14h", "11:45"),
@@ -56,6 +58,15 @@ class RecyclerActivity : AppCompatActivity() {
         // criação de um divisor
         binding.recyclerView.addItemDecoration(DividerItemDecoration(this , DividerItemDecoration.VERTICAL))
 
+
+        binding.btnFlutuante.setOnClickListener {
+            lista.add(
+                Log.d("RecyclerView", "Clicou no botão"),
+                Mensagem(R.drawable.perfil, "amoour", "ahhhh araa", "19:03")
+            )
+            Log.d("RecyclerView", lista.toString())
+            mensagemAdapter.atualizarListaDados(lista)
+        }
 
 //        binding.recyclerView.layoutManager = GridLayoutManager(this , 2)
 //        binding.recyclerView.layoutManager = StaggeredGridLayoutManager(2 , StaggeredGridLayoutManager.VERTICAL)

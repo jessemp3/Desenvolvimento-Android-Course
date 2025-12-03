@@ -14,10 +14,13 @@ class MensagemAdapter(
     private val clique: (String) -> Unit // pra poder fazer evento direto na activity
 ) : Adapter<MensagemAdapter.MensagemViewHolder>() {
 
-    private val listaMensagens =  mutableListOf<Mensagem>()
+    private var listaMensagens =  mutableListOf<Mensagem>()
 
-    fun atualizarListaDados(list : List<Mensagem>){
-        listaMensagens.addAll(list)
+    fun atualizarListaDados(list : MutableList<Mensagem>){
+//        listaMensagens.addAll(list)
+        listaMensagens = list
+
+        notifyDataSetChanged()
     }
 
 
