@@ -1,21 +1,25 @@
 package com.jesse.listasecoleoces.reciclerView
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.jesse.listasecoleoces.R
 import com.jesse.listasecoleoces.reciclerView.repository.Mensagem
 
 class MensagemAdapter(
-    private val lista: List<Mensagem>,
     private val clique: (String) -> Unit // pra poder fazer evento direto na activity
 ) : Adapter<MensagemAdapter.MensagemViewHolder>() {
+
+    private val listaMensagens =  mutableListOf<Mensagem>()
+
+    fun atualizarListaDados(list : List<Mensagem>){
+        listaMensagens.addAll(list)
+    }
+
 
     inner class MensagemViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val imagePerfil: ImageView = view.findViewById(R.id.imageCardPerfil)
@@ -61,7 +65,7 @@ class MensagemAdapter(
         holder: MensagemViewHolder,
         position: Int
     ) {
-        val mensagem = lista[position]
+        val mensagem = listaMensagens[position]
         holder.textNome.text = mensagem.nome
         holder.textMensagem.text = mensagem.ultima
 //        holder.textHora.text = mensagem.hora
@@ -75,7 +79,7 @@ class MensagemAdapter(
 
     // retorna a quantidade de itens da lista
     override fun getItemCount(): Int {
-        return lista.size
+        return listaMensagens.size
     }
 
 

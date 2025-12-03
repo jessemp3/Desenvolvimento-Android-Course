@@ -16,6 +16,7 @@ import com.jesse.listasecoleoces.reciclerView.repository.Mensagem
 
 class RecyclerActivity : AppCompatActivity() {
     lateinit var binding: ActivityRecyclerBinding
+    private lateinit var mensagemAdapter: MensagemAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +29,7 @@ class RecyclerActivity : AppCompatActivity() {
             insets
         }
 
-        val lista = listOf(
+        val lista = listOf( // conjunto de dados -> dataset
           Mensagem(R.drawable.perfil, "kaique", "Olá, como vai?", "08:15"),
           Mensagem(R.drawable.perfil, "jesse", "Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?", "09:30"),
           Mensagem(R.drawable.perfil, "cice", "Encontro às 14h", "11:45"),
@@ -41,10 +42,13 @@ class RecyclerActivity : AppCompatActivity() {
           Mensagem(R.drawable.perfil, "sofia", "racaoo", "20:55")
         )
 
-        binding.recyclerView.adapter = MensagemAdapter(lista){ nome ->
+        mensagemAdapter =  MensagemAdapter{ nome ->
             Toast.makeText(this, nome, Toast.LENGTH_SHORT).show()
         }
-//        binding.recyclerView2.adapter = MensagemAdapter(lista)
+        mensagemAdapter.atualizarListaDados(
+            lista
+        )
+        binding.recyclerView.adapter = mensagemAdapter
 
     // possivel fazer essa config via xml ou por aqui (code)
         binding.recyclerView.layoutManager = LinearLayoutManager(this , LinearLayoutManager.VERTICAL , false)
