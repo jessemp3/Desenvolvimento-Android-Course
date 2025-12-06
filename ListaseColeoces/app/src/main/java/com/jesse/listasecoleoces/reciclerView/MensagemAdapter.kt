@@ -17,17 +17,31 @@ class MensagemAdapter(
     private var listaMensagens =  mutableListOf<Mensagem>()
 
     fun executarOperacao(){
-        listaMensagens.add(
-//            0, // com o index 0 o item vai pro começo da lista e não pro fim
-            Mensagem(R.drawable.perfil, "tuturuuu", "aaaaaa", "20:55")
-        )
+  // notificar sobre um item alterado
+//    listaMensagens[0] = Mensagem(R.drawable.perfil, "kaique testando", "Olá, como vai?", "08:15")
+//    notifyItemChanged(0)
 
-        listaMensagens.add(
-            Mensagem(R.drawable.perfil, "testando", "aaaaaa", "20:55")
 
-        )
+//        remove
 
-        notifyItemRangeChanged(listaMensagens.size,2 )
+        listaMensagens.removeAt(4)
+        notifyItemRemoved(4)
+
+
+
+//        listaMensagens.add(
+////            0, // com o index 0 o item vai pro começo da lista e não pro fim
+//            Mensagem(R.drawable.perfil, "tuturuuu", "aaaaaa", "20:55")
+//        )
+//
+//        listaMensagens.add(
+//            Mensagem(R.drawable.perfil, "testando", "aaaaaa", "20:55")
+//
+//        )
+//
+//        adicionar varios intems a partir de um ponto
+//        notifyItemRangeChanged(listaMensagens.size,2 )
+//        notificar sobre um item , passando o local do novo item como argumento
 //        notifyItemInserted(listaMensagens.size)
     }
 
