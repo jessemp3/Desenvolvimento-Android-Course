@@ -16,11 +16,27 @@ class MensagemAdapter(
 
     private var listaMensagens =  mutableListOf<Mensagem>()
 
+    fun executarOperacao(){
+        listaMensagens.add(
+//            0, // com o index 0 o item vai pro começo da lista e não pro fim
+            Mensagem(R.drawable.perfil, "tuturuuu", "aaaaaa", "20:55")
+        )
+
+        listaMensagens.add(
+            Mensagem(R.drawable.perfil, "testando", "aaaaaa", "20:55")
+
+        )
+
+        notifyItemRangeChanged(listaMensagens.size,2 )
+//        notifyItemInserted(listaMensagens.size)
+    }
+
     fun atualizarListaDados(list : MutableList<Mensagem>){
 //        listaMensagens.addAll(list)
         listaMensagens = list
 
-        notifyDataSetChanged()
+//        notifyDataSetChanged()
+    // a questão do notify é que ele atualiza todo o conjunto de dados e não apenas o dados que foi att
     }
 
 

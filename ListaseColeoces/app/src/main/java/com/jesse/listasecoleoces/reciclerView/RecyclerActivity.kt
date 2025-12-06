@@ -36,11 +36,6 @@ class RecyclerActivity : AppCompatActivity() {
           Mensagem(R.drawable.perfil, "jesse", "Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?", "09:30"),
           Mensagem(R.drawable.perfil, "cice", "Encontro às 14h", "11:45"),
           Mensagem(R.drawable.perfil, "alice", "Obrigada!", "13:05"),
-          Mensagem(R.drawable.perfil, "mariana", "Vou chegar tarde", "15:20"),
-          Mensagem(R.drawable.perfil, "pedro", "Beleza", "16:00"),
-          Mensagem(R.drawable.perfil, "lucas", "Confirmação enviada", "17:10"),
-          Mensagem(R.drawable.perfil, "ana", "Top", "18:25"),
-          Mensagem(R.drawable.perfil, "bruno", "Pronto", "19:40"),
           Mensagem(R.drawable.perfil, "sofia", "racaoo", "20:55")
         )
 
@@ -60,12 +55,14 @@ class RecyclerActivity : AppCompatActivity() {
 
 
         binding.btnFlutuante.setOnClickListener {
-            lista.add(
-                Log.d("RecyclerView", "Clicou no botão"),
-                Mensagem(R.drawable.perfil, "amoour", "ahhhh araa", "19:03")
-            )
-            Log.d("RecyclerView", lista.toString())
-            mensagemAdapter.atualizarListaDados(lista)
+
+            mensagemAdapter.executarOperacao()
+//            lista.add(
+//                Log.d("RecyclerView", "Clicou no botão"),
+//                Mensagem(R.drawable.perfil, "amoour", "ahhhh araa", "19:03")
+//            )
+//            Log.d("RecyclerView", lista.toString())
+//            mensagemAdapter.atualizarListaDados(lista)
         }
 
 //        binding.recyclerView.layoutManager = GridLayoutManager(this , 2)
