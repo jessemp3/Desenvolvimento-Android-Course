@@ -12,8 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Binding">
         <activity
-            android:name=".FABActivity"
-            android:exported="true" >
+            android:name=".CheckBoxActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,8 +21,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ButtonActivity"
+            android:name=".FABActivity"
             android:exported="true"/>
+        <activity
+            android:name=".ButtonActivity"
+            android:exported="true" />
         <activity
             android:name=".LinearLayoutActivity"
             android:exported="true" />
