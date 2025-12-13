@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Binding">
         <activity
-            android:name=".CheckBoxActivity"
+            android:name=".RadioActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,8 +21,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".FABActivity"
+            android:name=".CheckBoxActivity"
             android:exported="true"/>
+        <activity
+            android:name=".FABActivity"
+            android:exported="true" />
         <activity
             android:name=".ButtonActivity"
             android:exported="true" />
