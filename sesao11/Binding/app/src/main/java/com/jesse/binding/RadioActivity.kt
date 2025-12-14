@@ -1,11 +1,14 @@
 package com.jesse.binding
 
+import android.content.Context
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.snackbar.Snackbar
 import com.jesse.binding.databinding.ActivityRadioBinding
 
 class RadioActivity : AppCompatActivity() {
@@ -27,7 +30,8 @@ class RadioActivity : AppCompatActivity() {
         with(binding){
             button5.setOnClickListener {
 //                radioButton()
-                switchButton()
+//                switchButton()
+                exibirSnackBar(this@RadioActivity)
             }
 
             toggleButton.setOnClickListener {
@@ -37,6 +41,22 @@ class RadioActivity : AppCompatActivity() {
             }
         }
     }
+}
+
+private fun ActivityRadioBinding.exibirSnackBar(context: Context) {
+ val snackbar = Snackbar.make(
+     main,
+     "SnackBar" ,
+     Snackbar.LENGTH_LONG
+ )
+
+    snackbar.setAction("Desfazer"){
+        Toast.makeText(context , "Desfeito" ,  Toast.LENGTH_SHORT).show()
+    }
+
+    snackbar.setTextColor(R.color.blue)
+
+    snackbar.show()
 }
 
 private fun ActivityRadioBinding.switchButton() {
