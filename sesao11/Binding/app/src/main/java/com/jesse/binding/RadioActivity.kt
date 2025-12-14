@@ -1,6 +1,7 @@
 package com.jesse.binding
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -25,10 +26,25 @@ class RadioActivity : AppCompatActivity() {
 
         with(binding){
             button5.setOnClickListener {
-                radioButton()
+//                radioButton()
+                switchButton()
+            }
+
+            toggleButton.setOnClickListener {
+                if(toggleButton.isChecked){
+                    Toast.makeText(this@RadioActivity , "Toggle selecionado" , Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
+}
+
+private fun ActivityRadioBinding.switchButton() {
+    val selecionado = switch1.isChecked
+    val toogleSelecionado = toggleButton.isChecked
+
+
+    textViewResultado.text = "Switch: ${selecionado} \nToggle: ${toogleSelecionado}"
 }
 
 private fun ActivityRadioBinding.radioButton() {

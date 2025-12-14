@@ -46,7 +46,25 @@
                 android:layout_height="wrap_content"
                 android:text="Feminio" />
 
+
         </RadioGroup>
+
+<!--        class of switch-->
+
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Receber notificação ?" />
+
+        <ToggleButton
+            android:id="@+id/toggleButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="ToggleButton"
+            android:textOff="inativo"
+            android:textOn="ativo" />
 
         <CheckBox
             android:id="@+id/confirmacao"
