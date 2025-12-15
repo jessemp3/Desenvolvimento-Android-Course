@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat.getColor
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.snackbar.Snackbar
@@ -31,7 +33,8 @@ class RadioActivity : AppCompatActivity() {
             button5.setOnClickListener {
 //                radioButton()
 //                switchButton()
-                exibirSnackBar(this@RadioActivity)
+//                exibirSnackBar(this@RadioActivity)
+                caixaDialog(this@RadioActivity)
             }
 
             toggleButton.setOnClickListener {
@@ -42,6 +45,31 @@ class RadioActivity : AppCompatActivity() {
         }
     }
 }
+
+private fun ActivityRadioBinding.caixaDialog(context: Context) {
+    val alertBuilder = AlertDialog.Builder(context)
+    alertBuilder.setTitle("Confirmar Exlusão do item?")
+    alertBuilder.setMessage("Confirmar?")
+
+    alertBuilder.setNegativeButton("Cancelar" , {
+        dialog , posicao ->
+        Toast.makeText(context , "Cancelado ${posicao}" , Toast.LENGTH_SHORT).show()
+        dialog.cancel()
+    })
+
+    alertBuilder.setPositiveButton("Remover" , {
+        //dialog(colocar _ se não for usar , e a posição do botão
+        dialog , posicao ->
+        Toast.makeText(context , "Removido ${posicao}" , Toast.LENGTH_SHORT).show()
+    })
+
+    alertBuilder.setCancelable(false)
+    alertBuilder.setIcon(R.drawable.ic_perfil)
+
+    val alertDialog = alertBuilder.create()
+    alertDialog.show()
+}
+
 
 private fun ActivityRadioBinding.exibirSnackBar(context: Context) {
  val snackbar = Snackbar.make(
@@ -54,7 +82,7 @@ private fun ActivityRadioBinding.exibirSnackBar(context: Context) {
         Toast.makeText(context , "Desfeito" ,  Toast.LENGTH_SHORT).show()
     }
 
-    snackbar.setTextColor(R.color.blue)
+//    snackbar.setTextColor(getColor(R.color.blue , ))
 
     snackbar.show()
 }
