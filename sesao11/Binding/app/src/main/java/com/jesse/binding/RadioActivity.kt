@@ -3,12 +3,12 @@ package com.jesse.binding
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ResourcesCompat.getColor
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.snackbar.Snackbar
@@ -65,13 +65,44 @@ private fun ActivityRadioBinding.spinerItemSelecionado() {
 
 private fun ActivityRadioBinding.spinnerExibir(context: Context) {
     val names = listOf<String>("Escolher Nomes", "kaique", "alice " , "jesse" , "cice")
+    // dentro de um escopo como esse , pra pegar um resoucers , só atraves do context
+    val list = context.resources.getStringArray(R.array.spiner)
 
     // pra poder setar valores no spinner , tem quer criar um adapter nele kkk
-    spinner.adapter = ArrayAdapter<String>(
+//    spinner.adapter = ArrayAdapter<String>(
+//        context,
+//        android.R.layout.simple_spinner_dropdown_item,
+//        list
+//    )
+
+    // maneira melhor pra criar direito do resoucer
+
+    spinner.adapter = ArrayAdapter.createFromResource(
         context,
+        R.array.spiner,
         android.R.layout.simple_spinner_dropdown_item,
-        names
     )
+
+
+    // com essa interface ele faz as att instatanemanete (meio obvio né, só traduzir o nome skk)
+    spinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+        override fun onItemSelected(
+            p0: AdapterView<*>?, // parent
+            p1: View?,
+            p2: Int, // posicion
+            p3: Long
+        ) {
+            // acão pra quando for selecionado algum item do spiner
+//            val itemSelecionado = p0?.getItemAtPosition(p2)
+            val itemSelecionado = p0?.selectedItem
+            textViewResultado.text = "$itemSelecionado"
+        }
+
+        override fun onNothingSelected(p0: AdapterView<*>?) {
+           // obviamente quando nada for selecionado
+        }
+
+    }
 }
 
 private fun ActivityRadioBinding.caixaDialog(context: Context) {

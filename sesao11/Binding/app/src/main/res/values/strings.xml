@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">binding</string>
+
+    <string-array name="spiner">
+        <item>Selecione uma opção</item>
+        <item>jesse</item>
+        <item>cice</item>
+        <item>kaique</item>
+        <item>alice</item>
+    </string-array>
+
 </resources>
