@@ -3,6 +3,7 @@ package com.jesse.binding
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
@@ -30,11 +31,14 @@ class RadioActivity : AppCompatActivity() {
 
 
         with(binding){
+
+            spinnerExibir(this@RadioActivity)
             button5.setOnClickListener {
 //                radioButton()
 //                switchButton()
 //                exibirSnackBar(this@RadioActivity)
-                caixaDialog(this@RadioActivity)
+//                caixaDialog(this@RadioActivity)
+                spinerItemSelecionado()
             }
 
             toggleButton.setOnClickListener {
@@ -44,6 +48,30 @@ class RadioActivity : AppCompatActivity() {
             }
         }
     }
+}
+
+private fun ActivityRadioBinding.spinerItemSelecionado() {
+    val itemSelecionado = spinner.selectedItem
+    val itemPosicao = spinner.selectedItemPosition
+
+
+    if(itemPosicao == 0){
+        textViewResultado.text = "Selecione um item"
+    }else{
+        textViewResultado.text = "$itemSelecionado : $itemPosicao"
+
+    }
+}
+
+private fun ActivityRadioBinding.spinnerExibir(context: Context) {
+    val names = listOf<String>("Escolher Nomes", "kaique", "alice " , "jesse" , "cice")
+
+    // pra poder setar valores no spinner , tem quer criar um adapter nele kkk
+    spinner.adapter = ArrayAdapter<String>(
+        context,
+        android.R.layout.simple_spinner_dropdown_item,
+        names
+    )
 }
 
 private fun ActivityRadioBinding.caixaDialog(context: Context) {

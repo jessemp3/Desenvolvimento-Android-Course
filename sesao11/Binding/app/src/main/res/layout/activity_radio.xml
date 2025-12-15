@@ -66,6 +66,14 @@
             android:textOff="inativo"
             android:textOn="ativo" />
 
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+
+            android:contentDescription="null"
+            android:spinnerMode="dropdown" />
+
         <CheckBox
             android:id="@+id/confirmacao"
             android:layout_width="match_parent"
