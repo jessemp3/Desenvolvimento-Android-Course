@@ -12,14 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Navegacao">
         <activity
-            android:name=".NewActivity"
-            android:parentActivityName=".ToolBarActivity"
+            android:name=".ToolBarActivity"
             android:exported="false" />
+        <activity
+            android:name=".NewActivity"
+            android:exported="false"
+            android:parentActivityName=".ToolBarActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".ToolBarActivity"
+            android:name=".RelativeLayoutActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
