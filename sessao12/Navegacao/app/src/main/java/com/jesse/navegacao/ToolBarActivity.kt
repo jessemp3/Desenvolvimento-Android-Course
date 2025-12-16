@@ -1,5 +1,6 @@
 package com.jesse.navegacao
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -32,25 +33,29 @@ class ToolBarActivity : AppCompatActivity() {
 
     private fun inicializarToolBar(): Boolean {
         with(binding) {
-            materialToolbar.title = "Youtube"
-            materialToolbar.setTitleTextColor(
+            toolbar.next.setOnClickListener {
+                startActivity(Intent(applicationContext, NewActivity::class.java))
+            }
+
+            toolbar.materialToolbar.title = "Youtube"
+            toolbar.materialToolbar.setTitleTextColor(
                 getColor(R.color.white)
             )
-            materialToolbar.subtitle = "Canal do Jesse"
-            materialToolbar.setSubtitleTextColor(
+            toolbar.materialToolbar.subtitle = "Canal do Jesse"
+            toolbar.materialToolbar.setSubtitleTextColor(
                 getColor(R.color.white)
             )
 
             /*
             inflando menus
              */
-            materialToolbar.inflateMenu(R.menu.menu_princiapl)
+            toolbar.materialToolbar.inflateMenu(R.menu.menu_princiapl)
 
-//            setSupportActionBar(binding.materialToolbar)
+//            setSupportActionBar(binding.toolbar.materialToolbar)
 //            mainn.inicializarActionBar()
 
 
-            materialToolbar.setOnMenuItemClickListener { menuItem ->
+            toolbar.materialToolbar.setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
                     R.id.itemPesquisar -> Toast.makeText(
                         this@ToolBarActivity,

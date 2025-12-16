@@ -12,6 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Navegacao">
         <activity
+            android:name=".NewActivity"
+            android:parentActivityName=".ToolBarActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity

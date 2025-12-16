@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     usando menu provider, outra forma de criar os menus
      */
     public fun inicializarActionBar() {
+
         addMenuProvider(
             object : MenuProvider {
                 override fun onCreateMenu(
