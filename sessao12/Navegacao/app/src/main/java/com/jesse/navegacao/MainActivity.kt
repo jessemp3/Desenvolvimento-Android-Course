@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     /*
     usando menu provider, outra forma de criar os menus
      */
-    private fun inicializarActionBar() {
+    public fun inicializarActionBar() {
         addMenuProvider(
             object : MenuProvider {
                 override fun onCreateMenu(
@@ -44,19 +44,19 @@ class MainActivity : AppCompatActivity() {
                 override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                     when (menuItem.itemId) {
                         R.id.itemPesquisar -> Toast.makeText(
-                            this@MainActivity,
+                            applicationContext,
                             "Pesquisar",
                             Toast.LENGTH_SHORT
                         ).show()
 
                         R.id.itemConfiguracoes -> Toast.makeText(
-                            this@MainActivity,
+                            applicationContext,
                             "Configurações",
                             Toast.LENGTH_SHORT
                         ).show()
 
                         R.id.itemAdicionar -> Toast.makeText(
-                            this@MainActivity,
+                            applicationContext,
                             "Adicionar",
                             Toast.LENGTH_SHORT
                         ).show()
