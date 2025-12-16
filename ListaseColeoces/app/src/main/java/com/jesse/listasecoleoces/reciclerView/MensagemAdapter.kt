@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.jesse.listasecoleoces.R
+import com.jesse.listasecoleoces.databinding.ItemCardviewBinding
 import com.jesse.listasecoleoces.reciclerView.repository.Mensagem
 
 class MensagemAdapter(
@@ -54,18 +55,21 @@ class MensagemAdapter(
     }
 
 
-    inner class MensagemViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        val imagePerfil: ImageView = view.findViewById(R.id.imageCardPerfil)
-        val textNome: TextView = view.findViewById(R.id.textViewCardName)
-        val textMensagem: TextView = view.findViewById(R.id.textViewCardMessage)
+    inner class MensagemViewHolder(val binding: ItemCardviewBinding) : RecyclerView.ViewHolder(binding.root) {
+//        val imagePerfil: ImageView = view.findViewById(R.id.imageCardPerfil)
+//        val textNome: TextView = view.findViewById(R.id.textViewCardName)
+//        val textMensagem: TextView = view.findViewById(R.id.textViewCardMessage)
 //        val textHora: TextView = view.findViewById(R.id.textHora)
 
 
 
         fun bind(mensagem: Mensagem){
             //pegando o contexto do item
+            binding.textViewCardName.text = mensagem.nome
+            binding.textViewCardMessage.text = mensagem.ultima
+
 //            val contextImage = imagePerfil.context
-            imagePerfil.setOnClickListener {
+            binding.cardViewItem.setOnClickListener {
                 clique(mensagem.nome)
             }
 
@@ -83,8 +87,18 @@ class MensagemAdapter(
         val layoutinflater = LayoutInflater.from(parent.context)
 
         //e aqui estou literalmente inflando a view do layout
+         /*
         val itemView = layoutinflater.inflate(
             R.layout.item_cardview,
+            parent,
+            false
+        )
+
+          */
+
+        // forma de inflar com binding
+        val itemView = ItemCardviewBinding.inflate(
+            layoutinflater,
             parent,
             false
         )
@@ -99,10 +113,10 @@ class MensagemAdapter(
         position: Int
     ) {
         val mensagem = listaMensagens[position]
-        holder.textNome.text = mensagem.nome
-        holder.textMensagem.text = mensagem.ultima
+        holder.binding.textViewCardName.text = mensagem.nome
+        holder.binding.textViewCardMessage.text = mensagem.ultima
 //        holder.textHora.text = mensagem.hora
-        holder.imagePerfil.setImageResource(mensagem.imagem)
+        holder.binding.imageCardPerfil.setImageResource(mensagem.imagem)
 
         // aqui que os eventos de clique acontececem
         holder.bind(mensagem)
