@@ -3,6 +3,7 @@ package com.jesse.sqlite.database
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 
 class DataBaseHelper(context: Context): SQLiteOpenHelper(
     /*
@@ -13,12 +14,26 @@ class DataBaseHelper(context: Context): SQLiteOpenHelper(
     * */
     context, "loja.db", null , 1
 ) {
-    override fun onCreate(p0: SQLiteDatabase?) {
-        TODO("Not yet implemented")
+    override fun onCreate(db: SQLiteDatabase?) {
+        val sql = "create table if not EXISTS produtos (" +
+                "id_produto integer not NULL PRIMARY key AUTOINCREMENT," +
+                "titulo varchar(100)," +
+                "descricao text" +
+                ");"
+
+
+        try {
+            db?.execSQL(sql)
+            Log.i("info_db", "Tabela criada com sucesso")
+        }catch (e: Exception){
+            e.printStackTrace()
+            Log.i("info_db", "Erro ao criar a tabela")
+        }
+
     }
 
     override fun onUpgrade(
-        p0: SQLiteDatabase?,
+        db: SQLiteDatabase?,
         p1: Int,
         p2: Int
     ) {
