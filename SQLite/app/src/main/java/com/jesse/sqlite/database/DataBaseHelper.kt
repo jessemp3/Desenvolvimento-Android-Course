@@ -14,11 +14,19 @@ class DataBaseHelper(context: Context): SQLiteOpenHelper(
     * */
     context, "loja.db", null , 1
 ) {
+    companion object {
+        const val TABELA_PRODUTOS = "produtos"
+        const val ID_PRODUTO = "id_produto"
+        const val TITULO = "titulo"
+        const val DESCRICAO = "descricao"
+    }
+
+
     override fun onCreate(db: SQLiteDatabase?) {
-        val sql = "create table if not EXISTS produtos (" +
-                "id_produto integer not NULL PRIMARY key AUTOINCREMENT," +
-                "titulo varchar(100)," +
-                "descricao text" +
+        val sql = "create table if not EXISTS $TABELA_PRODUTOS (" +
+                "$ID_PRODUTO integer not NULL PRIMARY key AUTOINCREMENT," +
+                "$TITULO varchar(100)," +
+                "$DESCRICAO text" +
                 ");"
 
 

@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -33,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        with(binding){
+        with(binding) {
             btnSalvar.setOnClickListener {
                 salvar()
             }
@@ -53,24 +52,25 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun ActivityMainBinding.salvar(){
+    private fun ActivityMainBinding.salvar() {
         val titulo = editTextText.text.toString()
-        val sql = "insert into produtos values (null , '$titulo' , 'Mackbook é bom pra trabalhar com kmp');"
+        val sql =
+            "insert into ${DataBaseHelper.TABELA_PRODUTOS} values (null , '$titulo' , 'Mackbook é bom pra trabalhar com kmp');"
 
         try {
             bancoDeDados?.writableDatabase?.execSQL(sql)
             Log.i("info_db", "Produto salvo com sucesso")
             editTextText.text.clear()
-        }catch (e: Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
 
-    private fun leitura(){
+    private fun leitura() {
         try {
 
-        }catch (e: Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
@@ -84,11 +84,32 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun ActivityMainBinding.listar() {
-        TODO("Not yet implemented")
+        val sql = "select * from ${DataBaseHelper.TABELA_PRODUTOS};"
+
+       val cursor =  bancoDeDados.readableDatabase
+           .rawQuery(sql, null)
+
+        /*
+        * dessa forma aqui , vc não precisa saber o indice da coluna
+        * apenas passa o nome da coluna e o curos recupera o indice
+        * */
+
+        val indiceId = cursor.getColumnIndex(DataBaseHelper.ID_PRODUTO)
+        val indiceTitulo = cursor.getColumnIndex(DataBaseHelper.TITULO)
+        val indiceDescricao = cursor.getColumnIndex(DataBaseHelper.DESCRICAO)
+
+        while(cursor.moveToNext()){ // true or false
+            val idProduto = cursor.getInt(indiceId) // 0 -> posição da coluna id
+            val titulo = cursor.getString(indiceTitulo) // 1 -> posição da coluna titulo
+            val descricao = cursor.getString(indiceDescricao) // 2 -> posição da coluna descricao
+
+
+            Log.d("info_db", "id: $idProduto , titulo: $titulo , descricao: $descricao" , )
+            Log.d("info_db", "cursor: ${cursor.position}")
+        }
     }
-
-
 }
+
 
 
 
