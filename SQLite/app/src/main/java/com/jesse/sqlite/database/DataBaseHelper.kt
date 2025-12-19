@@ -37,7 +37,8 @@ class DataBaseHelper(context: Context): SQLiteOpenHelper(
         p1: Int,
         p2: Int
     ) {
-        TODO("Not yet implemented")
+        Log.i("info_db", "onUpgrade")
+
     }
 
 }
