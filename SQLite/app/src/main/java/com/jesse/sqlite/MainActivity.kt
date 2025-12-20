@@ -7,7 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.jesse.sqlite.database.DataBaseHelper
+import com.jesse.sqlite.database.ProdutoDAO
 import com.jesse.sqlite.databinding.ActivityMainBinding
+import com.jesse.sqlite.model.Produto
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy {
@@ -54,74 +56,47 @@ class MainActivity : AppCompatActivity() {
 
     private fun ActivityMainBinding.salvar() {
         val titulo = editTextText.text.toString()
-        val sql =
-            "insert into ${DataBaseHelper.TABELA_PRODUTOS} values (null , '$titulo' , 'Mackbook é bom pra trabalhar com kmp');"
 
-        try {
-            bancoDeDados.writableDatabase?.execSQL(sql)
-            Log.i("info_db", "Produto salvo com sucesso")
-            editTextText.text.clear()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        val produtoDAO = ProdutoDAO(this@MainActivity)
+        val produto = Produto(
+            -1 ,  // estrategia pra apenas passa um valor , o banco meesemo naõ pega um valor -1
+            titulo , "descricao"
+        )
+        editTextText.text.clear()
+        produtoDAO.salvar(produto)
     }
 
 
     private fun ActivityMainBinding.atualizar() {
         val titulo = editTextText.text.toString()
-        // update sem where atualiza tudo kkkk
-        val sql =
-            "update ${DataBaseHelper.TABELA_PRODUTOS} " +
-                    "set ${DataBaseHelper.TITULO} = '$titulo'" +
-                    " WHERE ${DataBaseHelper.ID_PRODUTO} = 1;"
 
-
-        try {
-            bancoDeDados.writableDatabase.execSQL(sql)
-            Log.i("info_db", "Produto atualizado com sucesso")
-            editTextText.text.clear()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        val produtoDAO = ProdutoDAO(this@MainActivity)
+        val produto = Produto(
+            -1 ,  // estrategia pra apenas passa um valor , o banco meesemo naõ pega um valor -1
+            titulo , "descricao"
+        )
+        editTextText.text.clear()
+        produtoDAO.atualizar(produto)
 
 
     }
 
     private fun ActivityMainBinding.remover() {
-        val sql = "delete from ${DataBaseHelper.TABELA_PRODUTOS} where ${DataBaseHelper.ID_PRODUTO} = 1;"
-
-        try {
-            bancoDeDados.writableDatabase?.execSQL(sql)
-            Log.i("info_db", "Produto removido com sucesso")
-            editTextText.text.clear()
-        } catch (e: Exception) {
-        }
+        val produtoDAO = ProdutoDAO(this@MainActivity)
+        editTextText.text.clear()
+        produtoDAO.remover(2)
     }
 
     private fun ActivityMainBinding.listar() {
-        val sql = "select * from ${DataBaseHelper.TABELA_PRODUTOS};"
+        val produtoDAO = ProdutoDAO(this@MainActivity)
+        val listaProdutos = produtoDAO.listar()
 
-        val cursor = bancoDeDados.readableDatabase
-            .rawQuery(sql, null)
-
-        /*
-        * dessa forma aqui , vc não precisa saber o indice da coluna
-        * apenas passa o nome da coluna e o curos recupera o indice
-        * */
-
-        val indiceId = cursor.getColumnIndex(DataBaseHelper.ID_PRODUTO)
-        val indiceTitulo = cursor.getColumnIndex(DataBaseHelper.TITULO)
-        val indiceDescricao = cursor.getColumnIndex(DataBaseHelper.DESCRICAO)
-
-        while (cursor.moveToNext()) { // true or false
-            val idProduto = cursor.getInt(indiceId) // 0 -> posição da coluna id
-            val titulo = cursor.getString(indiceTitulo) // 1 -> posição da coluna titulo
-            val descricao = cursor.getString(indiceDescricao) // 2 -> posição da coluna descricao
-
-
-            Log.d("info_db", "id: $idProduto , titulo: $titulo , descricao: $descricao")
-            Log.d("info_db", "cursor: ${cursor.position}")
+        if(listaProdutos.isNotEmpty()){
+            listaProdutos.forEach {produto ->
+                tvResultado.text = "${produto.idProduto} - ${produto.titulo}"
+            }
         }
+
     }
 }
 
