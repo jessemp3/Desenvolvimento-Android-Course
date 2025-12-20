@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
             "insert into ${DataBaseHelper.TABELA_PRODUTOS} values (null , '$titulo' , 'Mackbook é bom pra trabalhar com kmp');"
 
         try {
-            bancoDeDados?.writableDatabase?.execSQL(sql)
+            bancoDeDados.writableDatabase?.execSQL(sql)
             Log.i("info_db", "Produto salvo com sucesso")
             editTextText.text.clear()
         } catch (e: Exception) {
@@ -67,27 +67,42 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun leitura() {
-        try {
+    private fun ActivityMainBinding.atualizar() {
+        val titulo = editTextText.text.toString()
+        // update sem where atualiza tudo kkkk
+        val sql =
+            "update ${DataBaseHelper.TABELA_PRODUTOS} " +
+                    "set ${DataBaseHelper.TITULO} = '$titulo'" +
+                    " WHERE ${DataBaseHelper.ID_PRODUTO} = 1;"
 
+
+        try {
+            bancoDeDados.writableDatabase.execSQL(sql)
+            Log.i("info_db", "Produto atualizado com sucesso")
+            editTextText.text.clear()
         } catch (e: Exception) {
             e.printStackTrace()
         }
-    }
 
-    private fun ActivityMainBinding.atualizar() {
-        TODO("Not yet implemented")
+
     }
 
     private fun ActivityMainBinding.remover() {
-        TODO("Not yet implemented")
+        val sql = "delete from ${DataBaseHelper.TABELA_PRODUTOS} where ${DataBaseHelper.ID_PRODUTO} = 1;"
+
+        try {
+            bancoDeDados.writableDatabase?.execSQL(sql)
+            Log.i("info_db", "Produto removido com sucesso")
+            editTextText.text.clear()
+        } catch (e: Exception) {
+        }
     }
 
     private fun ActivityMainBinding.listar() {
         val sql = "select * from ${DataBaseHelper.TABELA_PRODUTOS};"
 
-       val cursor =  bancoDeDados.readableDatabase
-           .rawQuery(sql, null)
+        val cursor = bancoDeDados.readableDatabase
+            .rawQuery(sql, null)
 
         /*
         * dessa forma aqui , vc não precisa saber o indice da coluna
@@ -98,13 +113,13 @@ class MainActivity : AppCompatActivity() {
         val indiceTitulo = cursor.getColumnIndex(DataBaseHelper.TITULO)
         val indiceDescricao = cursor.getColumnIndex(DataBaseHelper.DESCRICAO)
 
-        while(cursor.moveToNext()){ // true or false
+        while (cursor.moveToNext()) { // true or false
             val idProduto = cursor.getInt(indiceId) // 0 -> posição da coluna id
             val titulo = cursor.getString(indiceTitulo) // 1 -> posição da coluna titulo
             val descricao = cursor.getString(indiceDescricao) // 2 -> posição da coluna descricao
 
 
-            Log.d("info_db", "id: $idProduto , titulo: $titulo , descricao: $descricao" , )
+            Log.d("info_db", "id: $idProduto , titulo: $titulo , descricao: $descricao")
             Log.d("info_db", "cursor: ${cursor.position}")
         }
     }
