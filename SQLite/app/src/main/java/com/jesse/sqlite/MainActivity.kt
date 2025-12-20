@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
 
         val produtoDAO = ProdutoDAO(this@MainActivity)
         val produto = Produto(
-            -1 ,  // estrategia pra apenas passa um valor , o banco meesemo naõ pega um valor -1
+            3 ,  // estrategia pra apenas passa um valor , o banco meesemo naõ pega um valor -1
             titulo , "descricao"
         )
         editTextText.text.clear()
@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
     private fun ActivityMainBinding.remover() {
         val produtoDAO = ProdutoDAO(this@MainActivity)
         editTextText.text.clear()
-        produtoDAO.remover(2)
+        produtoDAO.remover(6)
     }
 
     private fun ActivityMainBinding.listar() {
@@ -93,6 +93,7 @@ class MainActivity : AppCompatActivity() {
 
         if(listaProdutos.isNotEmpty()){
             listaProdutos.forEach {produto ->
+                Log.i("info_db", "${produto.idProduto} - ${produto.titulo}")
                 tvResultado.text = "${produto.idProduto} - ${produto.titulo}"
             }
         }

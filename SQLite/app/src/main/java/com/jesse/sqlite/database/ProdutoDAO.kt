@@ -29,10 +29,12 @@ class ProdutoDAO(context: Context): IProdutoDAO {
     override fun atualizar(produto: Produto): Boolean {
         // update sem where atualiza tudo kkkk
         val titulo = produto.titulo
+        val idProduto = produto.idProduto
+
         val sql =
             "update ${DataBaseHelper.TABELA_PRODUTOS} " +
                     "set ${DataBaseHelper.TITULO} = '$titulo'" +
-                    " WHERE ${DataBaseHelper.ID_PRODUTO} = 1;"
+                    " WHERE ${DataBaseHelper.ID_PRODUTO} = $idProduto;"
 
 
         try {
