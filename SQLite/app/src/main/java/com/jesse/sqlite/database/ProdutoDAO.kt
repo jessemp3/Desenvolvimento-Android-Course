@@ -1,23 +1,32 @@
 package com.jesse.sqlite.database
 
+import android.content.ContentValues
 import android.content.Context
 import android.util.Log
 import com.jesse.sqlite.model.Produto
 
 class ProdutoDAO(context: Context): IProdutoDAO {
-    val escrita = DataBaseHelper(context).writableDatabase
+   val escrita = DataBaseHelper(context).writableDatabase
     val leitura = DataBaseHelper(context).readableDatabase
 
 
     override fun salvar(produto: Produto): Boolean {
-        val titulo = produto.titulo
-        val sql =
-            "insert into ${DataBaseHelper.TABELA_PRODUTOS}" +
-                    " values (null , '$titulo' , 'Mackbook é bom pra trabalhar com kmp');"
+//        val titulo = produto.titulo
+        val valores = ContentValues()
+        valores.put(DataBaseHelper.TITULO, produto.titulo)
+
+//        val sql =
+//            "insert into ${DataBaseHelper.TABELA_PRODUTOS}" +
+//                    " values (null , '$titulo' , 'Mackbook é bom pra trabalhar com kmp');"
 
 
         try {
-            escrita.execSQL(sql)
+//            escrita.execSQL(sql)
+            escrita.insert(
+                DataBaseHelper.TABELA_PRODUTOS,
+                null , // basicamente isso é pra poder deixar alguma coluna como null
+                valores
+            )
             Log.i("info_db", "Produto salvo com sucesso")
         } catch (e: Exception) {
             e.printStackTrace()
@@ -55,6 +64,7 @@ class ProdutoDAO(context: Context): IProdutoDAO {
             escrita.execSQL(sql)
             Log.i("info_db", "Produto removido com sucesso")
         } catch (e: Exception) {
+            e.message?.let { Log.d("info_db", it) }
             e.printStackTrace()
             return false
         }
@@ -66,8 +76,7 @@ class ProdutoDAO(context: Context): IProdutoDAO {
 
         val sql = "select * from ${DataBaseHelper.TABELA_PRODUTOS};"
 
-        val cursor = leitura
-            .rawQuery(sql, null)
+        val cursor = leitura.rawQuery(sql, null)
 
         /*
         * dessa forma aqui , vc não precisa saber o indice da coluna

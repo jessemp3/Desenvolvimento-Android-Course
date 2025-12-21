@@ -2,6 +2,7 @@ package com.jesse.sqlite
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -15,12 +16,6 @@ class MainActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
-
-
-    private val bancoDeDados by lazy {
-        DataBaseHelper(this)
-    }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,8 +57,12 @@ class MainActivity : AppCompatActivity() {
             -1 ,  // estrategia pra apenas passa um valor , o banco meesemo naõ pega um valor -1
             titulo , "descricao"
         )
-        editTextText.text.clear()
-        produtoDAO.salvar(produto)
+        if(produtoDAO.salvar(produto)) {
+            editTextText.text.clear()
+            Toast.makeText(this@MainActivity, "Produto salvo com sucesso", Toast.LENGTH_SHORT).show()
+        }else{
+            Toast.makeText(this@MainActivity, "Erro ao salvar produto", Toast.LENGTH_SHORT).show()
+        }
     }
 
 
