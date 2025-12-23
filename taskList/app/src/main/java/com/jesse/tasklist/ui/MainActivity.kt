@@ -1,15 +1,17 @@
-package com.jesse.tasklist
+package com.jesse.tasklist.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.jesse.tasklist.databinding.ActivityAdicionarTarefaBinding
+import com.jesse.tasklist.R
+import com.jesse.tasklist.databinding.ActivityMainBinding
 
-class AdicionarTarefaActivity : AppCompatActivity() {
-    private val binding by lazy{
-        ActivityAdicionarTarefaBinding.inflate(layoutInflater)
+class MainActivity : AppCompatActivity() {
+    private val binding by lazy {
+        ActivityMainBinding.inflate(layoutInflater)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +25,10 @@ class AdicionarTarefaActivity : AppCompatActivity() {
         }
 
         with(binding){
-
+            fabAdicionar.setOnClickListener {
+                val intent = Intent(this@MainActivity, AdicionarTarefaActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 }
