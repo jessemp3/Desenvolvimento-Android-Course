@@ -2,6 +2,7 @@ package com.jesse.calculadoraimc
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -24,7 +25,21 @@ class MainActivity : AppCompatActivity() {
 
         binding.buttonCalcular.setOnClickListener {
            val intent = Intent(this , ResultadoActivity::class.java)
-            startActivity(intent)
+
+
+            val peso = binding.textInputEditTextPeso.text.toString()
+            val altura = binding.textInputEditTextAltura.text.toString()
+
+            if(peso.isNotEmpty() && altura.isNotEmpty()){
+                intent.putExtra("peso", peso.toDouble())
+                intent.putExtra("altura",  altura.toDouble())
+
+                startActivity(intent)
+            }else{
+                Toast.makeText(this , "Por favor, insira peso e altura válidos.", Toast.LENGTH_SHORT).show()
+            }
+
+
         }
     }
 }
