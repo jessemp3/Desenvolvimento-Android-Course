@@ -35,6 +35,9 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
 
+            // RecyclerView
+//            rvTarefas.adapter =
+
 
         }
     }
