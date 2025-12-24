@@ -7,7 +7,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.jesse.tasklist.R
+import com.jesse.tasklist.adapter.TarefaAdapter
 import com.jesse.tasklist.database.TarefaDAO
 import com.jesse.tasklist.databinding.ActivityMainBinding
 import com.jesse.tasklist.model.Tarefa
@@ -18,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private var listaTarefas = emptyList<Tarefa>()
+    private var tarefaAdapter:TarefaAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,18 +39,20 @@ class MainActivity : AppCompatActivity() {
             }
 
             // RecyclerView
-//            rvTarefas.adapter =
+            tarefaAdapter = TarefaAdapter()
+            rvTarefas.adapter = tarefaAdapter
 
-
+            rvTarefas.layoutManager = LinearLayoutManager(this@MainActivity)
         }
     }
 
     override fun onStart() {
         super.onStart()
-        listaTarefas = TarefaDAO(this@MainActivity).listar()
+        atulizarLista()
+    }
 
-        listaTarefas.forEach {tarefa ->
-            Log.d("info_db" , tarefa.descricao)
-        }
+    private fun atulizarLista(){
+        listaTarefas = TarefaDAO(this@MainActivity).listar()
+        tarefaAdapter?.adicionarLista(listaTarefas)
     }
 }
