@@ -3,7 +3,9 @@ package com.jesse.tasklist.ui
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -39,7 +41,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             // RecyclerView
-            tarefaAdapter = TarefaAdapter()
+            tarefaAdapter = TarefaAdapter(
+                {id -> confimarExclucao(id)}
+            )
             rvTarefas.adapter = tarefaAdapter
 
             rvTarefas.layoutManager = LinearLayoutManager(this@MainActivity)
@@ -55,4 +59,27 @@ class MainActivity : AppCompatActivity() {
         listaTarefas = TarefaDAO(this@MainActivity).listar()
         tarefaAdapter?.adicionarLista(listaTarefas)
     }
+
+    private fun ActivityMainBinding.confimarExclucao(id: Int) {
+        val alertBuilder = AlertDialog.Builder(this@MainActivity)
+
+        alertBuilder.setTitle("Confirmar Exclusão")
+        alertBuilder.setMessage("Deseja realmente excluir a tarefa?")
+
+        alertBuilder.setPositiveButton("Sim") { _, _ ->
+            val tarefaDao = TarefaDAO(this@MainActivity)
+
+            if(tarefaDao.remover(id)){
+                Toast.makeText(this@MainActivity, "Tarefa removida com sucesso", Toast.LENGTH_SHORT).show()
+                atulizarLista()
+            }else{
+                Toast.makeText(this@MainActivity, "Erro ao remover tarefa", Toast.LENGTH_SHORT).show()
+            }
+        }
+        alertBuilder.setNegativeButton("Não") { _, _ -> }
+
+        alertBuilder.create().show()
+    }
+
 }
+
