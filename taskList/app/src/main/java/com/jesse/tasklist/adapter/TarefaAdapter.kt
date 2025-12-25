@@ -8,6 +8,7 @@ import com.jesse.tasklist.model.Tarefa
 
 class TarefaAdapter(
     val onClickExcluir: (Int) -> Unit,
+    val onClickEditar: (Tarefa) -> Unit
 ) : RecyclerView.Adapter<TarefaAdapter.TarefaViewHolder>() {
 
     private var listaTarefas: List<Tarefa> = listOf()
@@ -30,6 +31,10 @@ class TarefaAdapter(
              binding.btnExcluir.setOnClickListener {
                  onClickExcluir(tarefa.idTarefa)
              }
+
+            binding.btnEditar.setOnClickListener {
+                onClickEditar(tarefa)
+            }
         }
 
     }

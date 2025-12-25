@@ -26,26 +26,78 @@ class AdicionarTarefaActivity : AppCompatActivity() {
             insets
         }
 
+
+        // recuperar tarefas passada
+        var tarefa: Tarefa? = null
+        val bundle = intent.extras
+        if (bundle != null) {
+            tarefa = bundle.getParcelable<Tarefa>("tarefa") as Tarefa
+
+            binding.textViewTitle.text = "Editar Tarefa"
+            binding.btnSalvar.text = "Editar"
+            binding.editTextTextTarefa.setText(tarefa.descricao)
+        }
+
         with(binding) {
             btnSalvar.setOnClickListener {
                 if (editTextTextTarefa.text.isNotEmpty()) {
-                    val descricao = editTextTextTarefa.text.toString()
-                    val tarefa = Tarefa(
-                        -1,
-                        descricao,
-                        "default"
-                    )
-
-                    val tarefaDAO = TarefaDAO(this@AdicionarTarefaActivity)
-                    if(tarefaDAO.salvar(tarefa)){
-                        Toast.makeText(this@AdicionarTarefaActivity, "Tarefa salva com sucesso", Toast.LENGTH_SHORT).show()
-                        finish()
+                    if (tarefa != null) {
+                        editar(tarefa)
+                    } else {
+                        salvar()
                     }
 
-                }else{
-                    Toast.makeText(this@AdicionarTarefaActivity, "Preencha uma tarefa", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(
+                        this@AdicionarTarefaActivity,
+                        "Preencha uma tarefa",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
     }
+
+    fun ActivityAdicionarTarefaBinding.salvar() {
+        val descricao = editTextTextTarefa.text.toString()
+        val tarefa = Tarefa(
+            -1,
+            descricao,
+            "default"
+        )
+
+        val tarefaDAO = TarefaDAO(this@AdicionarTarefaActivity)
+        if (tarefaDAO.salvar(tarefa)) {
+            Toast.makeText(
+                this@AdicionarTarefaActivity,
+                "Tarefa salva com sucesso",
+                Toast.LENGTH_SHORT
+            ).show()
+            finish()
+        }
+    }
+
+    private fun ActivityAdicionarTarefaBinding.editar(tarefa: Tarefa) {
+        textViewTitle.text = "Editar Tarefa"
+        val descricao = editTextTextTarefa.text.toString()
+
+        val tarefaAtualizar = Tarefa(
+            tarefa.idTarefa,
+            descricao,
+            "default"
+        )
+
+        val tarefaDAO = TarefaDAO(this@AdicionarTarefaActivity)
+
+        if (tarefaDAO.atualizar(tarefaAtualizar)) {
+            Toast.makeText(
+                this@AdicionarTarefaActivity,
+                "Tarefa editada com sucesso",
+                Toast.LENGTH_SHORT
+            ).show()
+            finish()
+        }
+    }
+
 }
+
