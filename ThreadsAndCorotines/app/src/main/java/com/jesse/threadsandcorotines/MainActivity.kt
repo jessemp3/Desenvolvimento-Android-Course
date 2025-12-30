@@ -44,6 +44,15 @@ class MainActivity : AppCompatActivity() {
             repeat(30){ i ->
                 Log.i("TAG", "Minha Thread: $i ${currentThread().name}")
                 sleep(1000) // -> como aqui dentro eu ja henro de thread , só basta passar o sleep
+                runOnUiThread { // -> para atualizar a interface
+                    binding.btnIniciar.text = "Contagem: $i"
+                    binding.btnIniciar.isEnabled = false // -> desabilita o botão
+
+                    if(i == 29){
+                        binding.btnIniciar.text = "Reiniciar"
+                        binding.btnIniciar.isEnabled = true
+                    }
+                }
                 /*
                 * ui thread só deve ser usada pra att coisas na interface
                 * */
