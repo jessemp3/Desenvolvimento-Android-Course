@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
+    private var pararThread = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,25 +37,32 @@ class MainActivity : AppCompatActivity() {
 
             btnIniciar.setOnClickListener {
 //                MinhaThread().start()
+                Thread(MinhaRunnable()).start()
                 // outro metodo runnable usando lambda
-                Thread{
-                    repeat(30){ i ->
-                        Log.i("TAG", "Minha Thread: $i ${currentThread().name}")
-                        sleep(1000) // -> como aqui dentro eu ja henro de thread , só basta passar o sleep
-                        runOnUiThread { // -> para atualizar a interface
-                            binding.btnIniciar.text = "Contagem: $i"
-                            binding.btnIniciar.isEnabled = false // -> desabilita o botão
+//                Thread{
+//                    repeat(30){ i ->
+//                        Log.i("TAG", "Minha Thread: $i ${currentThread().name}")
+//                        sleep(1000) // -> como aqui dentro eu ja henro de thread , só basta passar o sleep
+//                        runOnUiThread { // -> para atualizar a interface
+//                            binding.btnIniciar.text = "Contagem: $i"
+//                            binding.btnIniciar.isEnabled = false // -> desabilita o botão
+//
+//                            if(i == 29){
+//                                binding.btnIniciar.text = "Reiniciar"
+//                                binding.btnIniciar.isEnabled = true
+//                            }
+//                        }
+//                        /*
+//                        * ui thread só deve ser usada pra att coisas na interface
+//                        * */
+//                    }
+//                }.start()
+            }
 
-                            if(i == 29){
-                                binding.btnIniciar.text = "Reiniciar"
-                                binding.btnIniciar.isEnabled = true
-                            }
-                        }
-                        /*
-                        * ui thread só deve ser usada pra att coisas na interface
-                        * */
-                    }
-                }.start()
+            btnparar.setOnClickListener {
+                btnIniciar.text = "Reiniciar"
+                btnIniciar.isEnabled = true
+                pararThread = true
             }
         }
     }
@@ -85,6 +93,12 @@ class MainActivity : AppCompatActivity() {
     inner class MinhaRunnable: Runnable{
         override fun run() {
             repeat(30){ i ->
+
+                if(pararThread) {
+                    pararThread = false
+                     return // isso retorna vazio pra função , que faz ela para
+                }
+
                 Log.i("TAG", "Minha Thread: $i ${currentThread().name}")
                 sleep(1000) // -> como aqui dentro eu ja henro de thread , só basta passar o sleep
                 runOnUiThread { // -> para atualizar a interface
