@@ -8,6 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.jesse.threadsandcorotines.databinding.ActivityMainBinding
+import kotlinx.coroutines.Runnable
+import java.lang.Thread.currentThread
+import java.lang.Thread.sleep
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy {
@@ -32,7 +35,26 @@ class MainActivity : AppCompatActivity() {
             }
 
             btnIniciar.setOnClickListener {
-                MinhaThread().start()
+//                MinhaThread().start()
+                // outro metodo runnable usando lambda
+                Thread{
+                    repeat(30){ i ->
+                        Log.i("TAG", "Minha Thread: $i ${currentThread().name}")
+                        sleep(1000) // -> como aqui dentro eu ja henro de thread , só basta passar o sleep
+                        runOnUiThread { // -> para atualizar a interface
+                            binding.btnIniciar.text = "Contagem: $i"
+                            binding.btnIniciar.isEnabled = false // -> desabilita o botão
+
+                            if(i == 29){
+                                binding.btnIniciar.text = "Reiniciar"
+                                binding.btnIniciar.isEnabled = true
+                            }
+                        }
+                        /*
+                        * ui thread só deve ser usada pra att coisas na interface
+                        * */
+                    }
+                }.start()
             }
         }
     }
@@ -58,6 +80,28 @@ class MainActivity : AppCompatActivity() {
                 * */
             }
         }
+    }
+
+    inner class MinhaRunnable: Runnable{
+        override fun run() {
+            repeat(30){ i ->
+                Log.i("TAG", "Minha Thread: $i ${currentThread().name}")
+                sleep(1000) // -> como aqui dentro eu ja henro de thread , só basta passar o sleep
+                runOnUiThread { // -> para atualizar a interface
+                    binding.btnIniciar.text = "Contagem: $i"
+                    binding.btnIniciar.isEnabled = false // -> desabilita o botão
+
+                    if(i == 29){
+                        binding.btnIniciar.text = "Reiniciar"
+                        binding.btnIniciar.isEnabled = true
+                    }
+                }
+                /*
+                * ui thread só deve ser usada pra att coisas na interface
+                * */
+            }
+        }
+
     }
 
 
