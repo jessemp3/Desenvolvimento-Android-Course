@@ -11,7 +11,9 @@ import com.jesse.threadsandcorotines.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Runnable
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.lang.Thread.currentThread
 import java.lang.Thread.sleep
 
@@ -62,12 +64,14 @@ class MainActivity : AppCompatActivity() {
 //                }.start()
 
 
-                CoroutineScope(Dispatchers.Main).launch {
+                CoroutineScope(Dispatchers.IO).launch {
 
-                    binding.btnIniciar.text = "Executou "
+                    withContext(Dispatchers.Main){  // com esse trecho , eu consigo trocar o contexto da corotine pra mecher na ui , como nesse caso
+                        binding.btnIniciar.text = "Executou "
+                    }
                     repeat(15) { i ->
                         Log.i("Info_coroutine", "Minha Thread: $i ${currentThread().name}")
-                        sleep(1000)
+                        delay(1000)
                     }
                 }
 
