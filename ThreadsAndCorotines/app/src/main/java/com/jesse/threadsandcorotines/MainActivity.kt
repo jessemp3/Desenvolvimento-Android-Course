@@ -8,7 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.jesse.threadsandcorotines.databinding.ActivityMainBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Runnable
+import kotlinx.coroutines.launch
 import java.lang.Thread.currentThread
 import java.lang.Thread.sleep
 
@@ -37,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
             btnIniciar.setOnClickListener {
 //                MinhaThread().start()
-                Thread(MinhaRunnable()).start()
+//                Thread(MinhaRunnable()).start()
                 // outro metodo runnable usando lambda
 //                Thread{
 //                    repeat(30){ i ->
@@ -57,6 +60,17 @@ class MainActivity : AppCompatActivity() {
 //                        * */
 //                    }
 //                }.start()
+
+
+                CoroutineScope(Dispatchers.Main).launch {
+
+                    binding.btnIniciar.text = "Executou "
+                    repeat(15) { i ->
+                        Log.i("Info_coroutine", "Minha Thread: $i ${currentThread().name}")
+                        sleep(1000)
+                    }
+                }
+
             }
 
             btnparar.setOnClickListener {
