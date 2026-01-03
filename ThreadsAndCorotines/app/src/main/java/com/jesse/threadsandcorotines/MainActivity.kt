@@ -64,15 +64,7 @@ class MainActivity : AppCompatActivity() {
 //                }.start()
 
 
-                CoroutineScope(Dispatchers.IO).launch {
-
-                    withContext(Dispatchers.Main) {  // com esse trecho , eu consigo trocar o contexto da corotine pra mecher na ui , como nesse caso
-                        binding.btnIniciar.text = "Executou "
-                    }
-//                    repeat(15) { i ->
-//                        Log.i("Info_coroutine", "Minha Thread: $i ${currentThread().name}")
-//                        delay(1000)
-//                    }
+             val job = CoroutineScope(Dispatchers.IO).launch {
 //                    recuperarUserLogado()
                     executar()
                 }
@@ -87,7 +79,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun executar() {
+    private suspend fun executar(){
+        repeat(15) { i ->
+            Log.i("Info_coroutine", "Minha Thread: $i ${currentThread().name}")
+
+            withContext(Dispatchers.Main) {  // com esse trecho , eu consigo trocar o contexto da corotine pra mecher na ui , como nesse caso
+                binding.btnIniciar.text = "Executou "
+                binding.btnIniciar.isEnabled = false
+            }
+
+            delay(1000)
+        }
+    }
+
+    private suspend fun dadosUsuario() {
         /*
         * a questão principal aqui , é que o recuperar poderia estár pegando dados
         * de uma pai por exemplo
