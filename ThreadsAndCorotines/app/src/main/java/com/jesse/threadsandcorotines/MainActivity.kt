@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        with(binding){
+        with(binding) {
             button3.setOnClickListener {
                 val intent = Intent(this@MainActivity, MainActivity2::class.java)
                 startActivity(intent)
@@ -66,13 +66,15 @@ class MainActivity : AppCompatActivity() {
 
                 CoroutineScope(Dispatchers.IO).launch {
 
-                    withContext(Dispatchers.Main){  // com esse trecho , eu consigo trocar o contexto da corotine pra mecher na ui , como nesse caso
+                    withContext(Dispatchers.Main) {  // com esse trecho , eu consigo trocar o contexto da corotine pra mecher na ui , como nesse caso
                         binding.btnIniciar.text = "Executou "
                     }
-                    repeat(15) { i ->
-                        Log.i("Info_coroutine", "Minha Thread: $i ${currentThread().name}")
-                        delay(1000)
-                    }
+//                    repeat(15) { i ->
+//                        Log.i("Info_coroutine", "Minha Thread: $i ${currentThread().name}")
+//                        delay(1000)
+//                    }
+//                    recuperarUserLogado()
+                    executar()
                 }
 
             }
@@ -85,18 +87,43 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    inner class MinhaThread: Thread(){
+    private suspend fun executar() {
+        /*
+        * a questão principal aqui , é que o recuperar poderia estár pegando dados
+        * de uma pai por exemplo
+        * e esse dados podem demorar um teco
+        * sem o suspend , o fluxo seguiria em frente sem esperar ter carregado
+        * e o usuario ficar null , causando null exception e chashando o app
+        * */
+        val usuario = recuperarUserLogado()
+        Log.d("TAG", "Usuario: $usuario T: ${currentThread().name}")
+        // postagens cria uma dependencia no usuario
+        val postgens = recuperarPostagens(usuario.id)
+        Log.d("TAG", "Postagens: ${postgens.size}")
+    }
+
+    private suspend fun recuperarPostagens(id: Int): List<String> {
+        delay(2000)
+        return listOf("Postagem 1", "Postagem 2")
+    }
+
+    private suspend fun recuperarUserLogado(): User {
+        delay(2000) // uma suspend fuction , não pode ser executada fora de uma coroutine
+        return User(1, "Jesse")
+    }
+
+    inner class MinhaThread : Thread() {
         override fun run() {
             super.run()
 
-            repeat(30){ i ->
+            repeat(30) { i ->
                 Log.i("TAG", "Minha Thread: $i ${currentThread().name}")
                 sleep(1000) // -> como aqui dentro eu ja henro de thread , só basta passar o sleep
                 runOnUiThread { // -> para atualizar a interface
                     binding.btnIniciar.text = "Contagem: $i"
                     binding.btnIniciar.isEnabled = false // -> desabilita o botão
 
-                    if(i == 29){
+                    if (i == 29) {
                         binding.btnIniciar.text = "Reiniciar"
                         binding.btnIniciar.isEnabled = true
                     }
@@ -108,13 +135,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    inner class MinhaRunnable: Runnable{
+    inner class MinhaRunnable : Runnable {
         override fun run() {
-            repeat(30){ i ->
+            repeat(30) { i ->
 
-                if(pararThread) {
+                if (pararThread) {
                     pararThread = false
-                     return // isso retorna vazio pra função , que faz ela para
+                    return // isso retorna vazio pra função , que faz ela para
                 }
 
                 Log.i("TAG", "Minha Thread: $i ${currentThread().name}")
@@ -123,7 +150,7 @@ class MainActivity : AppCompatActivity() {
                     binding.btnIniciar.text = "Contagem: $i"
                     binding.btnIniciar.isEnabled = false // -> desabilita o botão
 
-                    if(i == 29){
+                    if (i == 29) {
                         binding.btnIniciar.text = "Reiniciar"
                         binding.btnIniciar.isEnabled = true
                     }
