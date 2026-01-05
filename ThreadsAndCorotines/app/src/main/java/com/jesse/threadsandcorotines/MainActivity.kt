@@ -10,6 +10,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.jesse.threadsandcorotines.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.Runnable
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private var pararThread = false
+    private var job: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +66,7 @@ class MainActivity : AppCompatActivity() {
 //                }.start()
 
 
-             val job = CoroutineScope(Dispatchers.IO).launch {
+             job = CoroutineScope(Dispatchers.IO).launch {
 //                    recuperarUserLogado()
                     executar()
                 }
@@ -74,10 +76,16 @@ class MainActivity : AppCompatActivity() {
             btnparar.setOnClickListener {
                 btnIniciar.text = "Reiniciar"
                 btnIniciar.isEnabled = true
-                pararThread = true
+//                pararThread = true
+                job?.cancel()
             }
         }
     }
+
+//    override fun onStop() {
+//        super.onStop()
+//        job?.cancel()
+//    }
 
     private suspend fun executar(){
         repeat(15) { i ->
