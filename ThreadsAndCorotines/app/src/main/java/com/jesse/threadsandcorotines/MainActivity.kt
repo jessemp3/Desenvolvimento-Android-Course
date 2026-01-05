@@ -15,6 +15,7 @@ import kotlinx.coroutines.Runnable
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeout
 import java.lang.Thread.currentThread
 import java.lang.Thread.sleep
 
@@ -68,7 +69,10 @@ class MainActivity : AppCompatActivity() {
 
              job = CoroutineScope(Dispatchers.IO).launch {
 //                    recuperarUserLogado()
-                    executar()
+                 // executando com timeout
+                 withTimeout(7000L) {
+                     executar()
+                 }
                 }
 
             }
@@ -96,7 +100,7 @@ class MainActivity : AppCompatActivity() {
                 binding.btnIniciar.isEnabled = false
             }
 
-            delay(1000)
+            delay(1000L)
         }
     }
 
