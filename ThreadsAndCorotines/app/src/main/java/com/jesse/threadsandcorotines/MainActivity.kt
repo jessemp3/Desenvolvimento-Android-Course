@@ -12,12 +12,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.Runnable
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 import java.lang.Thread.currentThread
 import java.lang.Thread.sleep
+import kotlin.system.measureTimeMillis
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy {
@@ -67,13 +69,42 @@ class MainActivity : AppCompatActivity() {
 //                }.start()
 
 
+                /*
+                * a corrotine tem execucao linear né
+                * então pra executar mais de uma tarefa ao mesmo tempo
+                * precisa ter corrotinas separadas
+                * */
+
+
              job = CoroutineScope(Dispatchers.IO).launch {
 //                    recuperarUserLogado()
                  // executando com timeout
-                 withTimeout(7000L) {
-                     executar()
+//                 withTimeout(7000L) {
+//                     executar()
+//                 }
+
+
+                 /*
+                 * dessa forma, eu to criando outra corrotina , dentro do mesmo contexto
+                 * que é o IO
+                 * */
+              val tempo  = measureTimeMillis   { // metodo de medir o tempo da execução
+//                     var resultado1: String? = null
+//                     var resultado2: String? = null
+//
+                  val resultado1 =  async { tarefa1()}
+
+                  // ao invez de criar uma outra corrotina, melhor usar async
+                   val resultado2 = async { tarefa2() }
+
+                  // com o join , basicamente ele junta o fluxo e aguarda a corrotina ser finalizada
+//                  job1.join()
+//                  job2.join()
+
+                     Log.i("TAG", "Resultado: ${resultado1.await()} ${resultado2.await()}")
                  }
-                }
+                 Log.i("TAG", "Tempo: $tempo")
+             }
 
             }
 
@@ -90,6 +121,25 @@ class MainActivity : AppCompatActivity() {
 //        super.onStop()
 //        job?.cancel()
 //    }
+
+
+    private suspend fun tarefa1():String{
+        repeat(5) { i ->
+            Log.i("Info_tarefa_1", "Minha Thread: $i ${currentThread().name}")
+            delay(1000L)
+        }
+        return  "Executou tarefa 1"
+    }
+
+    private suspend fun tarefa2():String{
+        repeat(5) { i ->
+            Log.i("Info_tarefa_2", "Minha Thread: $i ${currentThread().name}")
+            delay(1000L)
+        }
+        return  "Executou tarefa 2"
+    }
+
+
 
     private suspend fun executar(){
         repeat(15) { i ->
