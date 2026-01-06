@@ -7,10 +7,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.jesse.threadsandcorotines.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.Runnable
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
@@ -43,6 +45,8 @@ class MainActivity : AppCompatActivity() {
             button3.setOnClickListener {
                 val intent = Intent(this@MainActivity, MainActivity2::class.java)
                 startActivity(intent)
+
+                finish()
             }
 
             btnIniciar.setOnClickListener {
@@ -76,7 +80,7 @@ class MainActivity : AppCompatActivity() {
                 * */
 
 
-             job = CoroutineScope(Dispatchers.IO).launch {
+/*             job = CoroutineScope(Dispatchers.IO).launch {
 //                    recuperarUserLogado()
                  // executando com timeout
 //                 withTimeout(7000L) {
@@ -84,10 +88,10 @@ class MainActivity : AppCompatActivity() {
 //                 }
 
 
-                 /*
+                 *//*
                  * dessa forma, eu to criando outra corrotina , dentro do mesmo contexto
                  * que é o IO
-                 * */
+                 * *//*
               val tempo  = measureTimeMillis   { // metodo de medir o tempo da execução
 //                     var resultado1: String? = null
 //                     var resultado2: String? = null
@@ -104,9 +108,24 @@ class MainActivity : AppCompatActivity() {
                      Log.i("TAG", "Resultado: ${resultado1.await()} ${resultado2.await()}")
                  }
                  Log.i("TAG", "Tempo: $tempo")
-             }
+             }*/
 
+                /*
+                abreviação tbm
+                CoroutineScope(Dispatchers.IO) -> GlobalScope
+                * */
+
+
+//                CoroutineScope(Dispatchers.Main).launch {
+                lifecycleScope.launch {  // basicamente uma abreviação
+                    repeat(15){
+                        Log.d("TAG", "Contagem: $it  T:${currentThread().name}")
+                        delay(1000L)
+                    }
+                }
             }
+
+
 
             btnparar.setOnClickListener {
                 btnIniciar.text = "Reiniciar"
