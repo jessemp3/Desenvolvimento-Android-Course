@@ -1,5 +1,12 @@
 package com.jesse.apis.service
 
+import retrofit2.Response
+import retrofit2.http.GET
+
 interface EnderecoApi {
-    suspend fun recuperarEndereco()
+
+    @GET("ws/01001000/json/")
+    suspend fun recuperarEndereco(
+
+    ) : Response<>
 }

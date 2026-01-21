@@ -38,6 +38,6 @@ class MainActivity : AppCompatActivity() {
 
     private suspend fun recuperaEndereco(){
        val enderecoApi =  retrofit.create<EnderecoApi>(EnderecoApi::class.java)
-        enderecoApi.recuperarEndereco()
+       val retorno =  enderecoApi.recuperarEndereco()
     }
 }
