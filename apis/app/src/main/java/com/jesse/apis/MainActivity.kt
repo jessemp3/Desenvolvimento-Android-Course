@@ -6,6 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.jesse.apis.databinding.ActivityMainBinding
+import com.jesse.apis.service.EnderecoApi
+import com.jesse.apis.service.RetrofitHelper.Companion.retrofit
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     val binding by lazy {
@@ -24,8 +29,15 @@ class MainActivity : AppCompatActivity() {
 
         with(binding){
             button.setOnClickListener {
-
+                CoroutineScope(Dispatchers.IO).launch {
+                    recuperaEndereco()
+                }
             }
         }
+    }
+
+    private suspend fun recuperaEndereco(){
+       val enderecoApi =  retrofit.create<EnderecoApi>(EnderecoApi::class.java)
+        enderecoApi.recuperarEndereco()
     }
 }
