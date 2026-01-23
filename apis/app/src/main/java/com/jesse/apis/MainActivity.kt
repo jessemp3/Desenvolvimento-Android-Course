@@ -1,16 +1,20 @@
 package com.jesse.apis
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.jesse.apis.databinding.ActivityMainBinding
+import com.jesse.apis.model.Endereco
 import com.jesse.apis.service.EnderecoApi
 import com.jesse.apis.service.RetrofitHelper.Companion.retrofit
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.plus
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     val binding by lazy {
@@ -27,17 +31,32 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        with(binding){
-            button.setOnClickListener {
-                CoroutineScope(Dispatchers.IO).launch {
-                    recuperaEndereco()
-                }
-            }
+        with(binding) {
+           button.setOnClickListener {
+               Log.d("button", "button clicked")
+               CoroutineScope(Dispatchers.IO).launch{
+                   recuperaEndereco()
+           }
+        }
         }
     }
 
-    private suspend fun recuperaEndereco(){
-       val enderecoApi =  retrofit.create<EnderecoApi>(EnderecoApi::class.java)
-       val retorno =  enderecoApi.recuperarEndereco()
+    private suspend fun recuperaEndereco() {
+        var retorno: Response<Endereco>? = null
+
+        try {
+            val enderecoApi = retrofit.create<EnderecoApi>(EnderecoApi::class.java)
+            retorno = enderecoApi.recuperarEndereco()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e("erro", e.message.toString())
+        }
+
+        if (retorno != null) {
+            if (retorno.isSuccessful) {
+                val endereco = retorno.body()
+                Log.i("endereco", endereco.toString())
+            }
+        }
     }
 }
