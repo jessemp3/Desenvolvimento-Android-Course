@@ -8,6 +8,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.jesse.apis.databinding.ActivityMainBinding
 import com.jesse.apis.model.Endereco
+import com.jesse.apis.model.EnderecoPlugin
 import com.jesse.apis.service.EnderecoApi
 import com.jesse.apis.service.RetrofitHelper.Companion.retrofit
 import kotlinx.coroutines.CoroutineScope
@@ -42,11 +43,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private suspend fun recuperaEndereco() {
-        var retorno: Response<Endereco>? = null
+        var retorno: Response<EnderecoPlugin>? = null
+        val cepDigitado = binding.editTextText.text.toString()
+
 
         try {
             val enderecoApi = retrofit.create<EnderecoApi>(EnderecoApi::class.java)
-            retorno = enderecoApi.recuperarEndereco()
+            retorno = enderecoApi.recuperarEndereco(cepDigitado)
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e("erro", e.message.toString())
