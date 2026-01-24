@@ -9,7 +9,8 @@ class RetrofitHelper {
         config inicial do retrofit
         * */
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://viacep.com.br/")
+//            .baseUrl("https://viacep.com.br/")
+            .baseUrl("https://jsonplaceholder.typicode.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

@@ -7,14 +7,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.jesse.apis.databinding.ActivityMainBinding
-import com.jesse.apis.model.Endereco
 import com.jesse.apis.model.EnderecoPlugin
+import com.jesse.apis.model.Postagem
 import com.jesse.apis.service.EnderecoApi
+import com.jesse.apis.service.PostagemApi
 import com.jesse.apis.service.RetrofitHelper.Companion.retrofit
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.plus
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
@@ -36,9 +36,33 @@ class MainActivity : AppCompatActivity() {
            button.setOnClickListener {
                Log.d("button", "button clicked")
                CoroutineScope(Dispatchers.IO).launch{
-                   recuperaEndereco()
+//                   recuperaEndereco()
+                   recuperarPostagens()
            }
         }
+        }
+    }
+
+    private suspend fun recuperarPostagens() {
+        var retorno: Response<List<Postagem>>? = null
+
+
+        try {
+            val postagemApi = retrofit.create<PostagemApi>(PostagemApi::class.java)
+            retorno = postagemApi.recuperarPostagens()
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e("erro", e.message.toString())
+        }
+
+        if (retorno != null) {
+            if (retorno.isSuccessful) {
+                val post = retorno.body()
+                post?.forEach { post ->
+                    Log.i("Post", post.toString())
+                }
+            }
         }
     }
 
