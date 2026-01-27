@@ -15,7 +15,9 @@ import com.jesse.apis.service.RetrofitHelper.Companion.retrofit
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Response
+import kotlin.collections.forEach
 
 class MainActivity : AppCompatActivity() {
     val binding by lazy {
@@ -37,9 +39,35 @@ class MainActivity : AppCompatActivity() {
                Log.d("button", "button clicked")
                CoroutineScope(Dispatchers.IO).launch{
 //                   recuperaEndereco()
-                   recuperarPostagens()
+//                   recuperarPostagens()
+                   recuperarPost()
            }
         }
+        }
+    }
+
+    private suspend fun recuperarPost(){
+        var retorno: Response<Postagem>? = null
+
+        try {
+            val postagemApi = retrofit.create<PostagemApi>(PostagemApi::class.java)
+            retorno = postagemApi.recuperarPostagem(1)
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e("erro", e.message.toString())
+        }
+
+        if (retorno != null) {
+            if (retorno.isSuccessful) {
+                val post = retorno.body()
+
+                withContext(Dispatchers.Main){
+                    binding.textViewResultado.text = "${post?.id} - ${post?.title}"
+
+                }
+                Log.d("post", "Id - ${post?.id} - Title - ${post?.title} - Body - ${post?.body} ")
+            }
         }
     }
 
