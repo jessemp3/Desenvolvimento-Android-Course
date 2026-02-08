@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.jesse.apis.databinding.ActivityMainBinding
+import com.jesse.apis.model.Comentario
 import com.jesse.apis.model.EnderecoPlugin
 import com.jesse.apis.model.Postagem
 import com.jesse.apis.service.EnderecoApi
@@ -40,18 +41,22 @@ class MainActivity : AppCompatActivity() {
                CoroutineScope(Dispatchers.IO).launch{
 //                   recuperaEndereco()
 //                   recuperarPostagens()
-                   recuperarPost()
+//                   recuperarPost()
+                   recuperarComentariosParaPostagens()
            }
         }
         }
     }
 
-    private suspend fun recuperarPost(){
-        var retorno: Response<Postagem>? = null
+    private suspend fun recuperarComentariosParaPostagens() {
+        var retorno: Response<List<Comentario>>? = null
+
 
         try {
-            val postagemApi = retrofit.create<PostagemApi>(PostagemApi::class.java)
-            retorno = postagemApi.recuperarPostagem(1)
+            val postagemApi = retrofit.create(PostagemApi::class.java)
+            retorno = postagemApi.recuperarComentarioParaPostagem(1)
+
+
 
         } catch (e: Exception) {
             e.printStackTrace()
@@ -61,15 +66,41 @@ class MainActivity : AppCompatActivity() {
         if (retorno != null) {
             if (retorno.isSuccessful) {
                 val post = retorno.body()
-
-                withContext(Dispatchers.Main){
-                    binding.textViewResultado.text = "${post?.id} - ${post?.title}"
-
+                var resultado = ""
+                post?.forEach { comentario ->
+                    resultado += "${comentario.id} - ${comentario.name} - ${comentario.body}\n"
                 }
-                Log.d("post", "Id - ${post?.id} - Title - ${post?.title} - Body - ${post?.body} ")
+                withContext(Dispatchers.Main) {
+                    binding.textViewResultado.text = resultado
+                }
             }
         }
     }
+
+//    private suspend fun recuperarPost(){
+//        var retorno: Response<Postagem>? = null
+//
+//        try {
+//            val postagemApi = retrofit.create<PostagemApi>(PostagemApi::class.java)
+//            retorno = postagemApi.recuperarPostagem(1)
+//
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//            Log.e("erro", e.message.toString())
+//        }
+//
+//        if (retorno != null) {
+//            if (retorno.isSuccessful) {
+//                val post = retorno.body()
+//
+//                withContext(Dispatchers.Main){
+//                    binding.textViewResultado.text = "${post?.id} - ${post?.title}"
+//
+//                }
+//                Log.d("post", "Id - ${post?.id} - Title - ${post?.title} - Body - ${post?.body} ")
+//            }
+//        }
+//    }
 
     private suspend fun recuperarPostagens() {
         var retorno: Response<List<Postagem>>? = null
