@@ -34,8 +34,6 @@ class RecyclerActivity : AppCompatActivity() {
         val lista = mutableListOf( // conjunto de dados -> dataset
           Mensagem(R.drawable.perfil, "kaique", "Olá, como vai?", "08:15"),
           Mensagem(R.drawable.perfil, "jesse", "Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?Vamos almoçar?", "09:30"),
-          Mensagem(R.drawable.perfil, "cice", "Encontro às 14h", "11:45"),
-          Mensagem(R.drawable.perfil, "alice", "Obrigada!", "13:05"),
           Mensagem(R.drawable.perfil, "sofia", "racaoo", "20:55")
         )
 
