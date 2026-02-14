@@ -38,14 +38,15 @@ class MainActivity : AppCompatActivity() {
         with(binding) {
            button.setOnClickListener {
                Log.d("button", "button clicked")
-               CoroutineScope(Dispatchers.IO).launch{
+               CoroutineScope(Dispatchers.IO).launch {
 //                   recuperaEndereco()
 //                   recuperarPostagens()
 //                   recuperarPost()
 //                   recuperarComentariosParaPostagens()
-                   recuperarComentariosParaPostagensQuery()
-               }
-        }
+//                   recuperarComentariosParaPostagensQuery()
+                   salvarPostagem()
+               }          }
+
         }
     }
 
@@ -78,6 +79,44 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    private suspend fun salvarPostagem() {
+        var retorno: Response<Postagem>? = null
+
+
+        val postagem = Postagem(
+            101,
+            0,
+            "teste",
+            "teste de criação de postagem"
+        )
+
+        try {
+            val postagemApi = retrofit.create(PostagemApi::class.java)
+//            retorno = postagemApi.salvarPostagem(postagem)
+            retorno = postagemApi.salvarPostagemFormulario(1090 , 0, "teste", "teste de criação de postagem com FormUrlEncoded")
+
+
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e("erro", e.message.toString())
+        }
+
+        if (retorno != null) {
+            if (retorno.isSuccessful) {
+                val post = retorno.body()
+                var resultado = ""
+
+                resultado += "${post?.id} - ${post?.userId} - ${post?.title} - ${post?.body}\n"
+
+                withContext(Dispatchers.Main) {
+                    binding.textViewResultado.text = resultado
+                }
+            }
+        }
+    }
+
 
     private suspend fun recuperarComentariosParaPostagens() {
         var retorno: Response<List<Comentario>>? = null
