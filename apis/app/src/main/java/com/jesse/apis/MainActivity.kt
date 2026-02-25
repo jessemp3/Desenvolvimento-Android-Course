@@ -36,17 +36,47 @@ class MainActivity : AppCompatActivity() {
         }
 
         with(binding) {
-           button.setOnClickListener {
-               Log.d("button", "button clicked")
-               CoroutineScope(Dispatchers.IO).launch {
+            button.setOnClickListener {
+                Log.d("button", "button clicked")
+                CoroutineScope(Dispatchers.IO).launch {
 //                   recuperaEndereco()
 //                   recuperarPostagens()
 //                   recuperarPost()
 //                   recuperarComentariosParaPostagens()
 //                   recuperarComentariosParaPostagensQuery()
-                   salvarPostagem()
-               }          }
+//                   salvarPostagem()
+//                    atualizarPostagem()
+                    deletarPostagem()
+                }
+            }
 
+        }
+    }
+
+    private suspend fun deletarPostagem() {
+        var retorno: Response<Unit>? = null
+
+
+
+        try {
+            val postagemApi = retrofit.create(PostagemApi::class.java)
+            retorno = postagemApi.deletarPostagem(1)
+
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e("erro", e.message.toString())
+        }
+
+        if (retorno != null) {
+            if (retorno.isSuccessful) {
+
+                Log.d("delete", "Postagem deletada com sucesso ${retorno.code()}")
+
+                withContext(Dispatchers.Main) {
+                    binding.textViewResultado.text = "Postagem deletada com sucesso ${retorno.code()}"
+                }
+            }
         }
     }
 
@@ -58,7 +88,6 @@ class MainActivity : AppCompatActivity() {
         try {
             val postagemApi = retrofit.create(PostagemApi::class.java)
             retorno = postagemApi.recuperarComentarioParaPostagemQuery(1)
-
 
 
         } catch (e: Exception) {
@@ -80,6 +109,47 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /*
+    private suspend fun atualizarPostagem() {
+        var retorno: Response<Postagem>? = null
+
+
+
+        try {
+            val postagemApi = retrofit.create(PostagemApi::class.java)
+            retorno = postagemApi.atualizarPostagemPatch(
+                1,
+                Postagem(
+                    1,
+                    0 ,
+                    null ,
+                    "tururu"
+
+                )
+            )
+
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e("erro", e.message.toString())
+        }
+
+        if (retorno != null) {
+            if (retorno.isSuccessful) {
+                val post = retorno.body()
+                var resultado = ""
+
+                resultado += "${post?.id} - ${post?.userId} - ${post?.title} - ${post?.body}\n"
+
+                withContext(Dispatchers.Main) {
+                    binding.textViewResultado.text = resultado
+                }
+            }
+        }
+    }
+    */
+
+    /*
     private suspend fun salvarPostagem() {
         var retorno: Response<Postagem>? = null
 
@@ -115,7 +185,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }
+    } */
 
 
     private suspend fun recuperarComentariosParaPostagens() {
@@ -125,7 +195,6 @@ class MainActivity : AppCompatActivity() {
         try {
             val postagemApi = retrofit.create(PostagemApi::class.java)
             retorno = postagemApi.recuperarComentarioParaPostagem(1)
-
 
 
         } catch (e: Exception) {
