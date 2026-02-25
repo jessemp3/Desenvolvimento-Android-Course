@@ -1,6 +1,7 @@
 package com.jesse.apis.service
 
 import com.jesse.apis.model.Comentario
+import com.jesse.apis.model.Foto
 import com.jesse.apis.model.Postagem
 import retrofit2.Response
 import retrofit2.http.Body
@@ -70,5 +71,12 @@ interface PostagemApi {
         @Path("id")
         id: Int
     ): Response<Unit>
+
+
+    @GET("photos/{id}")
+    suspend fun recuperarFoto(
+        @Path("id")
+        id: Int
+    ) : Response<Foto>
 
 }

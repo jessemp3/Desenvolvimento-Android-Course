@@ -9,10 +9,12 @@ import androidx.core.view.WindowInsetsCompat
 import com.jesse.apis.databinding.ActivityMainBinding
 import com.jesse.apis.model.Comentario
 import com.jesse.apis.model.EnderecoPlugin
+import com.jesse.apis.model.Foto
 import com.jesse.apis.model.Postagem
 import com.jesse.apis.service.EnderecoApi
 import com.jesse.apis.service.PostagemApi
 import com.jesse.apis.service.RetrofitHelper.Companion.retrofit
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -46,10 +48,45 @@ class MainActivity : AppCompatActivity() {
 //                   recuperarComentariosParaPostagensQuery()
 //                   salvarPostagem()
 //                    atualizarPostagem()
-                    deletarPostagem()
+//                    deletarPostagem()
+                    recuperarFoto()
                 }
             }
 
+        }
+    }
+
+
+    private suspend fun recuperarFoto(){
+        var retorno: Response<Foto>? = null
+
+        try {
+            val postagemApi = retrofit.create<PostagemApi>(PostagemApi::class.java)
+            retorno = postagemApi.recuperarFoto(5)
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e("erro", e.message.toString())
+        }
+
+        if (retorno != null) {
+            if (retorno.isSuccessful) {
+                val foto = retorno.body()
+
+                withContext(Dispatchers.Main){
+                    binding.textViewResultado.text = "${foto?.id} - ${foto?.url}"
+
+                    Picasso.get()
+                        .load(foto?.url)
+                        .into(binding.imageView)
+
+                }
+                Log.d("foto", "Id - ${foto?.id} - Title - ${foto?.url}")
+            }else{
+                withContext(Dispatchers.Main){
+                    binding.textViewResultado.text = "Erro ao recuperar foto ${retorno.code()}"
+                }
+            }
         }
     }
 
