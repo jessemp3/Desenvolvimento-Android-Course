@@ -30,6 +30,11 @@ android {
             )
         }
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -38,7 +43,14 @@ android {
 
 dependencies {
     implementation(platform(libs.firebase.bom))
+    //analytics
     implementation(libs.firebase.analytics)
+    //auth
+    implementation(libs.firebase.auth)
+    // banco de dados
+    implementation(libs.firebase.firestore)
+    //armazenamento
+    implementation(libs.firebase.storage)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
