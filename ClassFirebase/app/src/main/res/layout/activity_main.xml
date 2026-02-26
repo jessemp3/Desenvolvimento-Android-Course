@@ -9,15 +9,14 @@
 
 
     <Button
-        android:id="@+id/btnExecutar"
+        android:id="@+id/btnDeslogar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Executar"
+        android:text="Deslogar"
         app:cornerRadius="12dp"
+        app:layout_constraintStart_toEndOf="@id/btnLogar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -29,5 +28,28 @@
         android:text="Resultado"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnExecutar" />
+        app:layout_constraintTop_toBottomOf="@+id/btnDeslogar" />
+
+    <Button
+        android:id="@+id/btnCadastar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="Cadastrar"
+        app:cornerRadius="12dp"
+        app:layout_constraintEnd_toStartOf="@+id/btnLogar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnLogar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Logar"
+        app:cornerRadius="12dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toStartOf="@+id/btnDeslogar"
+        app:layout_constraintStart_toEndOf="@id/btnCadastar"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

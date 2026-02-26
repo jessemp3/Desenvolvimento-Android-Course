@@ -27,16 +27,43 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        binding.btnExecutar.setOnClickListener {
+        binding.btnCadastar.setOnClickListener {
             criarUser()
+        }
+
+        binding.btnLogar.setOnClickListener {
+            logarUser()
+        }
+
+        binding.btnDeslogar.setOnClickListener {
+            auth.signOut() // metodo de deslogar o user
         }
 
     }
 
+
+
     override fun onStart() {
         super.onStart()
-
         verificarUserLogado()
+    }
+
+    fun logarUser() {
+        val email = "kaique.teste@gmail.com"
+        val senha = "Tururu12.@!"
+
+        auth.signInWithEmailAndPassword(
+            email, senha
+        ).addOnSuccessListener { result ->
+            binding.textViewResultado.text = "Logado com sucesso"
+            exibirMensagem("Logado com sucesso")
+
+            verificarUserLogado()
+        }.addOnFailureListener { exception ->
+            val erro = exception.printStackTrace()
+            binding.textViewResultado.text = "Erro ao logar ${exception}"
+            exibirMensagem("Erro ao logar usuário ${erro}")
+        }
     }
 
 
