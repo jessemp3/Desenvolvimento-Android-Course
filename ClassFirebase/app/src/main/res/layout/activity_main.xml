@@ -23,12 +23,13 @@
         android:id="@+id/textViewResultado"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:layout_marginHorizontal="16dp"
         android:text="Resultado"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.031"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnDeslogar" />
+        app:layout_constraintTop_toBottomOf="@+id/btnAtt" />
 
     <Button
         android:id="@+id/btnCadastar"
@@ -52,4 +53,31 @@
         app:layout_constraintEnd_toStartOf="@+id/btnDeslogar"
         app:layout_constraintStart_toEndOf="@id/btnCadastar"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnSalvar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Salvar Dados"
+        android:layout_marginTop="16dp"
+        app:cornerRadius="12dp"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogar" />
+
+    <Button
+        android:id="@+id/btnAtt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Atualizar ou remover"
+        android:layout_marginTop="16dp"
+        app:cornerRadius="12dp"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSalvar" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

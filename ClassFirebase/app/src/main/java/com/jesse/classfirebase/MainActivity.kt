@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.jesse.classfirebase.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -16,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val auth = FirebaseAuth.getInstance()
+    private val banco = FirebaseFirestore.getInstance()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,13 +41,71 @@ class MainActivity : AppCompatActivity() {
             auth.signOut() // metodo de deslogar o user
         }
 
+        binding.btnSalvar.setOnClickListener {
+            salvarDados()
+        }
+
+        binding.btnAtt.setOnClickListener {
+            attDados()
+        }
+
     }
+
 
 
 
     override fun onStart() {
         super.onStart()
-        verificarUserLogado()
+//        verificarUserLogado()
+    }
+
+    fun salvarDados() {
+        banco.collection("users")
+            .document("2")
+            .set(
+                hashMapOf(
+                    "nome" to "jesse",
+                    "idade" to 21,
+                    "cpf" to "123456789"
+                )
+            )
+            .addOnSuccessListener {
+                exibirMensagem("Dados salvos com sucesso")
+            }.addOnFailureListener { exeption ->
+                exeption.printStackTrace()
+                exibirMensagem("Erro ao salvar dados")
+            }
+    }
+
+    fun attDados(){
+
+    }
+
+    //fazendo cadastro de user via email e senha
+    fun criarUser(){
+        // user digitou dados e coletei
+        val email = "kaique.teste@gmail.com"
+        val senha = "Tururu12.@!"
+
+        // realizando o cadastro
+        // dar preferencia em usar as instancias exatamente do q vc precisa e não só chamar o firebase
+       val auth = FirebaseAuth.getInstance()
+        auth.createUserWithEmailAndPassword(
+            email , senha
+        ).addOnSuccessListener { resultado ->
+            val emailUser = auth.currentUser?.email
+            val idUser = auth.currentUser?.uid
+
+            exibirMensagem("Usuário criado com sucesso ${idUser}")
+            binding.textViewResultado.text = "User: $emailUser"
+        }.addOnFailureListener { exception ->
+            val erro = exception.printStackTrace()
+            exibirMensagem("Erro ao criar usuário ${erro}")
+        }
+    }
+
+    fun exibirMensagem(text: String) {
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show()
     }
 
     fun logarUser() {
@@ -81,33 +141,5 @@ class MainActivity : AppCompatActivity() {
             exibirMensagem("Usuário não logado")
         }
 
-    }
-
-
-    //fazendo cadastro de user via email e senha
-    fun criarUser(){
-        // user digitou dados e coletei
-        val email = "kaique.teste@gmail.com"
-        val senha = "Tururu12.@!"
-
-        // realizando o cadastro
-        // dar preferencia em usar as instancias exatamente do q vc precisa e não só chamar o firebase
-       val auth = FirebaseAuth.getInstance()
-        auth.createUserWithEmailAndPassword(
-            email , senha
-        ).addOnSuccessListener { resultado ->
-            val emailUser = auth.currentUser?.email
-            val idUser = auth.currentUser?.uid
-
-            exibirMensagem("Usuário criado com sucesso ${idUser}")
-            binding.textViewResultado.text = "User: $emailUser"
-        }.addOnFailureListener { exception ->
-            val erro = exception.printStackTrace()
-            exibirMensagem("Erro ao criar usuário ${erro}")
-        }
-    }
-
-    fun exibirMensagem(text: String) {
-        Toast.makeText(this, text, Toast.LENGTH_LONG).show()
     }
 }
