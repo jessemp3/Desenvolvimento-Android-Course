@@ -49,6 +49,10 @@ class MainActivity : AppCompatActivity() {
             attDados()
         }
 
+        binding.btnListar.setOnClickListener {
+            listarDados()
+        }
+
     }
 
 
@@ -57,6 +61,31 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 //        verificarUserLogado()
+    }
+
+    fun listarDados() {
+        salvarDadosUser("jesse", 21)
+    }
+
+    fun salvarDadosUser( nome:String , idade: Int){
+
+
+
+        val idUserLogado = auth.currentUser?.uid
+        if (idUserLogado != null){
+
+            val dados = mapOf(
+                "nome" to nome,
+                "idade" to idade
+            )
+
+
+            banco.collection("users")
+                .document(idUserLogado)
+                .set(
+                    dados
+                )
+        }
     }
 
     fun salvarDados() {
@@ -78,11 +107,49 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun attDados(){
+        val idUser = auth.currentUser?.uid
+        if(idUser != null){ // dessa forma eu crio um document em relação ao use que esta logado
+
+
+        }
+
+        val ref =  banco.collection("users")
+            .add(
+                hashMapOf(
+                    "nome" to "kaique",
+            )
+            )
+
+
+        /*ref.set(
+            hashMapOf(
+                "nome" to "kaique",
+            )
+        ) */ // o set substitui todos os dados do documento
+
+
+//        ref.update("nome" , "jesse" )
+////            .addOnSuccessListener {
+////                exibirMensagem("Dados atualizados com sucesso")
+////            }.addOnFailureListener { exception ->
+////                exception.printStackTrace()
+////                exibirMensagem("Erro ao atualizar dados")
+////            }
+
+
+//        ref.delete() // nesse caso ele delete o ducument inteiro , que nesse caso é o 2
+//            .addOnSuccessListener {
+//                exibirMensagem("Dados deletados com sucesso")
+//            }.addOnFailureListener { exception ->
+//                exception.printStackTrace()
+//                exibirMensagem("Erro ao deletar dados")
+//            }
+
 
     }
 
     //fazendo cadastro de user via email e senha
-    fun criarUser(){
+    fun criarUser() {
         // user digitou dados e coletei
         val email = "kaique.teste@gmail.com"
         val senha = "Tururu12.@!"
@@ -95,6 +162,9 @@ class MainActivity : AppCompatActivity() {
         ).addOnSuccessListener { resultado ->
             val emailUser = auth.currentUser?.email
             val idUser = auth.currentUser?.uid
+
+               salvarDadosUser( "jesse" , 21 )
+
 
             exibirMensagem("Usuário criado com sucesso ${idUser}")
             binding.textViewResultado.text = "User: $emailUser"
@@ -115,10 +185,11 @@ class MainActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(
             email, senha
         ).addOnSuccessListener { result ->
+            val id = result.user?.uid
+
             binding.textViewResultado.text = "Logado com sucesso"
             exibirMensagem("Logado com sucesso")
 
-            verificarUserLogado()
         }.addOnFailureListener { exception ->
             val erro = exception.printStackTrace()
             binding.textViewResultado.text = "Erro ao logar ${exception}"
