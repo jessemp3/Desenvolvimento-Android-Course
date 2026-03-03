@@ -53,13 +53,56 @@ class MainActivity : AppCompatActivity() {
             listarDados()
         }
 
+        binding.btnPesquisar.setOnClickListener {
+            pesquisarDados()
+        }
+
     }
+
 
 
     override fun onStart() {
         super.onStart()
 //        verificarUserLogado()
     }
+
+
+    fun pesquisarDados() {
+        // aplicando filtros pra pesquisa
+        val ref = banco.collection("users")
+//            .whereEqualTo("nome", "jesse") // onde o atributo nome for igual a jesse
+//           .whereNotEqualTo("idade", 21) -> onde o atributo idade for diferente de 21
+//            .whereIn("nome" , listOf("jesse" , "kaiqueeee")) // onde o atributo nome for igual a jesse ou kaique
+//            .whereNotIn("nome", listOf("jesse", "kaique")) // onde o atributo nome for diferente de jesse ou kaique
+            .whereArrayContainsAny("skills" , listOf("java" , "kotlin" , "hilt"))
+
+
+        ref.addSnapshotListener { snapshot, exception ->
+//                val dados = snapshot?.data
+            val dadosDocuments = snapshot?.documents
+            var lista = "" // dessa forma eu recupero tudo que tem no banco
+            dadosDocuments?.forEach {
+                val dados = it.data
+
+                if (dados != null) {
+                    val nome = dados.get("nome")
+                    val idade = dados.get("idade")
+
+                    lista += "Nome: $nome \nIdade: $idade \n\n"
+
+                }
+
+            }
+
+            binding.textViewResultado.text = lista
+
+            if (exception != null) {
+                exibirMensagem("Erro ao listar dados")
+            }
+
+        }
+    }
+
 
     fun listarDados() {
 //        salvarDadosUser("kaique", 21)
