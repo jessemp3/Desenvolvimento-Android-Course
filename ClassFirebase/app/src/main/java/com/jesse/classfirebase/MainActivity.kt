@@ -56,23 +56,83 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
-
     override fun onStart() {
         super.onStart()
 //        verificarUserLogado()
     }
 
     fun listarDados() {
-        salvarDadosUser("jesse", 21)
+//        salvarDadosUser("kaique", 21)
+        val idUserLogao = auth.currentUser?.uid
+        if (idUserLogao != null) {
+            val ref = banco.collection("users")
+//                .document(idUserLogao)
+
+            // dessa forma eu pego os dados , mas ele att eu preciso fazer outra chamada pra saber
+            /*
+            ref.get()
+                .addOnSuccessListener { snapshot ->
+                    val dados = snapshot.data
+
+                    if(dados != null){
+                        val nome = dados.get("nome")
+                        val idade = dados.get("idade")
+
+                        binding.textViewResultado.text = "Nome: $nome \nIdade: $idade"
+
+                    }
+
+                }.addOnFailureListener {
+                    exibirMensagem("Erro ao listar dados")
+                }
+
+             */
+
+            // dessa forma quaquer att no banco , eu vou receber instantaneamente
+            ref.addSnapshotListener { snapshot, exception ->
+//                val dados = snapshot?.data
+                val dadosDocuments = snapshot?.documents
+                var lista = "" // dessa forma eu recupero tudo que tem no banco
+                dadosDocuments?.forEach {
+                    val dados = it.data
+
+                    if (dados != null) {
+                        val nome = dados.get("nome")
+                        val idade = dados.get("idade")
+
+                        lista += "Nome: $nome \nIdade: $idade \n\n"
+
+                    }
+
+                }
+
+                binding.textViewResultado.text = lista
+
+//
+//                if(dados != null){
+//                    val nome = dados.get("nome")
+//                    val idade = dados.get("idade")
+//
+//                    binding.textViewResultado.text = "Nome: $nome \nIdade: $idade"
+//
+//                }
+
+                if (exception != null) {
+                    exibirMensagem("Erro ao listar dados")
+                }
+
+            }
+
+
+        }
+
     }
 
-    fun salvarDadosUser( nome:String , idade: Int){
-
+    fun salvarDadosUser(nome: String, idade: Int) {
 
 
         val idUserLogado = auth.currentUser?.uid
-        if (idUserLogado != null){
+        if (idUserLogado != null) {
 
             val dados = mapOf(
                 "nome" to nome,
@@ -90,7 +150,7 @@ class MainActivity : AppCompatActivity() {
 
     fun salvarDados() {
         banco.collection("users")
-            .document("2")
+            .document("3")
             .set(
                 hashMapOf(
                     "nome" to "jesse",
@@ -106,18 +166,18 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    fun attDados(){
+    fun attDados() {
         val idUser = auth.currentUser?.uid
-        if(idUser != null){ // dessa forma eu crio um document em relação ao use que esta logado
+        if (idUser != null) { // dessa forma eu crio um document em relação ao use que esta logado
 
 
         }
 
-        val ref =  banco.collection("users")
+        val ref = banco.collection("users")
             .add(
                 hashMapOf(
                     "nome" to "kaique",
-            )
+                )
             )
 
 
@@ -151,19 +211,19 @@ class MainActivity : AppCompatActivity() {
     //fazendo cadastro de user via email e senha
     fun criarUser() {
         // user digitou dados e coletei
-        val email = "kaique.teste@gmail.com"
+        val email = "jesse.teste@gmail.com"
         val senha = "Tururu12.@!"
 
         // realizando o cadastro
         // dar preferencia em usar as instancias exatamente do q vc precisa e não só chamar o firebase
-       val auth = FirebaseAuth.getInstance()
+        val auth = FirebaseAuth.getInstance()
         auth.createUserWithEmailAndPassword(
-            email , senha
+            email, senha
         ).addOnSuccessListener { resultado ->
             val emailUser = auth.currentUser?.email
             val idUser = auth.currentUser?.uid
 
-               salvarDadosUser( "jesse" , 21 )
+            salvarDadosUser("jesse", 21)
 
 
             exibirMensagem("Usuário criado com sucesso ${idUser}")
@@ -179,7 +239,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun logarUser() {
-        val email = "kaique.teste@gmail.com"
+        val email = "jesse.teste@gmail.com"
         val senha = "Tururu12.@!"
 
         auth.signInWithEmailAndPassword(
@@ -208,7 +268,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(
                 Intent(this, PrincipalActivity::class.java)
             )
-        }else{
+        } else {
             exibirMensagem("Usuário não logado")
         }
 
