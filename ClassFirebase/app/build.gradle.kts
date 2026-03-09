@@ -51,6 +51,8 @@ dependencies {
     implementation(libs.firebase.firestore)
     //armazenamento
     implementation(libs.firebase.storage)
+//glide
+    implementation(libs.glide)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
