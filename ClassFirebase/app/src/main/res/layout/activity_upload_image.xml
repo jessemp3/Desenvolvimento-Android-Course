@@ -34,6 +34,7 @@
         android:id="@+id/imageBtnInsert"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:clickable="true"
         android:background="?selectableItemBackground"
         app:layout_constraintEnd_toStartOf="@+id/imageBtnCam"
         app:layout_constraintHorizontal_bias="0.5"
