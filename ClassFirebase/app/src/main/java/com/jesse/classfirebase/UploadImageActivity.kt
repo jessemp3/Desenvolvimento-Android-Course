@@ -78,6 +78,20 @@ class UploadImageActivity : AppCompatActivity() {
     }
 
     fun recuperarImageFirebase() {
+        val userId = auth.currentUser?.uid
+
+        if(userId != null){
+            storate.getReference("fotos")
+                .child(userId)
+                .child("fotoPerfil.jpg")
+                .downloadUrl
+                .addOnSuccessListener { url ->
+                    Glide.with(this)
+                        .load(url)
+                        .centerCrop()
+                        .into(binding.imageView)
+                }
+        }
 
     }
 
@@ -98,7 +112,7 @@ class UploadImageActivity : AppCompatActivity() {
             // dessa forma eu estou criando a pasta fotos e dentro dela a pasta aula e só ai o arquivo foto
             storate.getReference("fotos")
                 .child(userId)
-                .child(nomeImage) // nesse caso , vou usar valor fixo , mas o certo é usar um valor dinamico
+                .child("fotoPerfil.jpg") // nesse caso , vou usar valor fixo , mas o certo é usar um valor dinamico
                 .putFile(uriImageSelecionada!!)
                 .addOnSuccessListener {
                     Toast.makeText(this, "Upload realizado com sucesso", Toast.LENGTH_SHORT).show()
