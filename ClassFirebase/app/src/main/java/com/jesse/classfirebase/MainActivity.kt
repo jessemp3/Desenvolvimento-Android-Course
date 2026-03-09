@@ -74,8 +74,15 @@ class MainActivity : AppCompatActivity() {
 //           .whereNotEqualTo("idade", 21) -> onde o atributo idade for diferente de 21
 //            .whereIn("nome" , listOf("jesse" , "kaiqueeee")) // onde o atributo nome for igual a jesse ou kaique
 //            .whereNotIn("nome", listOf("jesse", "kaique")) // onde o atributo nome for diferente de jesse ou kaique
-            .whereArrayContainsAny("skills" , listOf("java" , "kotlin" , "hilt"))
+//            .whereArrayContainsAny("skills" , listOf("java" , "kotlin" , "hilt"))
 
+
+            // pesquisas com > , >= , < , <= , == , !=
+
+//            .whereGreaterThan("idade" , 40)
+//            .whereGreaterThanOrEqualTo("idade" , 21)
+//            .whereLessThan("idade" , 114)
+            .whereLessThanOrEqualTo("idade" , 21)
 
         ref.addSnapshotListener { snapshot, exception ->
 //                val dados = snapshot?.data
