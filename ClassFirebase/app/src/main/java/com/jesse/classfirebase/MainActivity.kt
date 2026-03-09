@@ -9,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.jesse.classfirebase.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -82,7 +83,11 @@ class MainActivity : AppCompatActivity() {
 //            .whereGreaterThan("idade" , 40)
 //            .whereGreaterThanOrEqualTo("idade" , 21)
 //            .whereLessThan("idade" , 114)
-            .whereLessThanOrEqualTo("idade" , 21)
+//            .whereLessThanOrEqualTo("idade" , 21)
+            .whereGreaterThanOrEqualTo("idade" , 30)
+            .whereLessThanOrEqualTo("idade" , 40)
+            .orderBy("idade", Query.Direction.ASCENDING)
+
 
         ref.addSnapshotListener { snapshot, exception ->
 //                val dados = snapshot?.data
