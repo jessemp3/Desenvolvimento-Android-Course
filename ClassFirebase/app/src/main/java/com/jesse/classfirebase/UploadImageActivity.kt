@@ -1,5 +1,6 @@
 package com.jesse.classfirebase
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -159,6 +160,7 @@ class UploadImageActivity : AppCompatActivity() {
     }
 
 
+    @SuppressLint("SuspiciousIndentation")
     fun uploadCamera() {
         // fotos -> viagens -> arquivo
 
