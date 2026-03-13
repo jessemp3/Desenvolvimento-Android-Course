@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.jesse.classfirebase.databinding.ActivityUploadImageBinding
+import java.io.ByteArrayOutputStream
 import java.util.UUID
 import kotlin.jvm.java
 
@@ -90,8 +91,10 @@ class UploadImageActivity : AppCompatActivity() {
             }
 
             fabUpload.setOnClickListener {
-                uploadGaleria()
+//                uploadGaleria()
+                uploadCamera()
             }
+
 
             fabRecuperar.setOnClickListener {
                 recuperarImageFirebase()
@@ -140,6 +143,48 @@ class UploadImageActivity : AppCompatActivity() {
                 .child(userId)
                 .child("fotoPerfil.jpg") // nesse caso , vou usar valor fixo , mas o certo é usar um valor dinamico
                 .putFile(uriImageSelecionada!!)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Upload realizado com sucesso", Toast.LENGTH_SHORT).show()
+
+                    it.metadata?.reference?.downloadUrl?.addOnSuccessListener { urlFirebase ->
+                        Toast.makeText(this, "$urlFirebase", Toast.LENGTH_SHORT).show()
+                    }
+                }.addOnFailureListener { error ->
+                    error.printStackTrace()
+                    Toast.makeText(this, "Erro ao fazer upload", Toast.LENGTH_SHORT).show()
+                }
+        }
+
+
+    }
+
+
+    fun uploadCamera() {
+        // fotos -> viagens -> arquivo
+
+        /*
+        * forma correta
+        * fotos ≥ id_user_logado ≥ identicador(se eu gerar cada foto com o mesmo nome, ele vai sobrescrever a foto antiga)
+        * */
+
+        val userId = auth.currentUser?.uid
+
+      val outputStream = ByteArrayOutputStream()
+
+          bitmapImagemSelecionada?.compress(
+              Bitmap.CompressFormat.JPEG ,
+              100 ,
+              outputStream
+        )
+
+        Log.d("userId" , "$userId")
+
+        if(bitmapImagemSelecionada != null && userId != null){
+            // dessa forma eu estou criando a pasta fotos e dentro dela a pasta aula e só ai o arquivo foto
+            storate.getReference("fotos")
+                .child(userId)
+                .child("fotoPerfil.jpg")
+                .putBytes(outputStream.toByteArray())
                 .addOnSuccessListener {
                     Toast.makeText(this, "Upload realizado com sucesso", Toast.LENGTH_SHORT).show()
 
