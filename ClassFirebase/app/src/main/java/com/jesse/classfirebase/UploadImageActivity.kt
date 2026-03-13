@@ -1,12 +1,17 @@
 package com.jesse.classfirebase
 
+import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -15,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.jesse.classfirebase.databinding.ActivityUploadImageBinding
 import java.util.UUID
+import kotlin.jvm.java
 
 class UploadImageActivity : AppCompatActivity() {
     private val binding by lazy {
@@ -31,6 +37,7 @@ class UploadImageActivity : AppCompatActivity() {
 
 
     private var uriImageSelecionada: Uri? = null
+    private var bitmapImagemSelecionada: Bitmap? = null
     private val abrirGaleria = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ){uri -> 
@@ -49,6 +56,21 @@ class UploadImageActivity : AppCompatActivity() {
         }else{
             Toast.makeText(this, "Nenhuma imagem selecioanda", Toast.LENGTH_SHORT).show()
         }
+    }
+
+
+    private val abrirCamera = registerForActivityResult(
+//        ActivityResultContracts.GetContent()
+        ActivityResultContracts.StartActivityForResult()
+    ){resultado ->
+       bitmapImagemSelecionada =  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            resultado.data?.extras?.getParcelable("data" , Bitmap::class.java)
+        }else {
+           resultado.data?.extras?.getParcelable("data")
+       }
+
+        binding.imageView.setImageBitmap(bitmapImagemSelecionada)
+        Toast.makeText(this, "Imagem selecionada", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,6 +95,10 @@ class UploadImageActivity : AppCompatActivity() {
 
             fabRecuperar.setOnClickListener {
                 recuperarImageFirebase()
+            }
+
+            imageBtnCam.setOnClickListener {
+                abrirCamera.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
             }
         }
     }

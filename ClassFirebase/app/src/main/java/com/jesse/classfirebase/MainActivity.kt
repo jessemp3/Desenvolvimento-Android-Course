@@ -64,6 +64,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        logarUser()
 //        verificarUserLogado()
     }
 
@@ -304,6 +305,8 @@ class MainActivity : AppCompatActivity() {
 
             binding.textViewResultado.text = "Logado com sucesso"
             exibirMensagem("Logado com sucesso")
+
+            startActivity(Intent(this , UploadImageActivity::class.java))
 
         }.addOnFailureListener { exception ->
             val erro = exception.printStackTrace()
