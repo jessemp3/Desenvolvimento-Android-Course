@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.jesse.classfirebase.databinding.ActivityUploadImageBinding
+import com.jesse.classfirebase.helper.Permissao.Companion.requisitarPermisoes
 import java.io.ByteArrayOutputStream
 import java.util.UUID
 import kotlin.jvm.java
@@ -84,6 +85,13 @@ class UploadImageActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        requisitarPermisoes(
+            this, listOf(
+            android.Manifest.permission.CAMERA,
+            android.Manifest.permission.READ_EXTERNAL_STORAGE
+        )
+        )
 
         with(binding){
             imageBtnInsert.setOnClickListener {
