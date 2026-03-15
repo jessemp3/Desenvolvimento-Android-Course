@@ -7,7 +7,7 @@ import androidx.core.content.ContextCompat
 
 class Permissao {
     companion object {
-        fun requisitarPermisoes(activity: Activity, permisoes: List<String>) {
+        fun requisitarPermisoes(activity: Activity, permisoes: List<String>, requestCode:Int) {
 
 
             //checar se tem permissao
@@ -32,7 +32,7 @@ class Permissao {
                 ActivityCompat.requestPermissions(
                     activity,
                     permisoesNegadas.toTypedArray(),
-                    0
+                    requestCode
                 )
             }
 

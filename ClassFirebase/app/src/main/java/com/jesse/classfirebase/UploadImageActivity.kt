@@ -87,10 +87,12 @@ class UploadImageActivity : AppCompatActivity() {
         }
 
         requisitarPermisoes(
-            this, listOf(
+            this,
+            listOf(
             android.Manifest.permission.CAMERA,
             android.Manifest.permission.READ_EXTERNAL_STORAGE
-        )
+        ),
+            0
         )
 
         with(binding){
@@ -112,6 +114,25 @@ class UploadImageActivity : AppCompatActivity() {
             imageBtnCam.setOnClickListener {
                 abrirCamera.launch(Intent(MediaStore.ACTION_IMAGE_CAPTURE))
             }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String?>,
+        grantResults: IntArray,
+        deviceId: Int
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults, deviceId)
+        Log.d("permisoes", "Request Code $requestCode")
+
+        permissions.forEachIndexed { index, string ->
+            Log.d("permisoes", "permisoes $index -> $string")
+            Log.d("permisoes", "grantResults $index -> ${grantResults[index]}")
+        }
+
+        if (requestCode == 0) {
+
         }
     }
 
