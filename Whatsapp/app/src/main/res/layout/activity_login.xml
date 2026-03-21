@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/logo_verde" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tILEmail"
+        android:id="@+id/tILEmailLogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
@@ -29,6 +29,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageViewLogo">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextEmailLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text|textEmailAddress"
@@ -37,7 +38,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tILPassword"
+        android:id="@+id/tILPasswordLogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
@@ -46,9 +47,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tILEmail">
+        app:layout_constraintTop_toBottomOf="@+id/tILEmailLogin">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextPasswordLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Digite sua senha"
@@ -65,7 +67,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintEnd_toStartOf="@id/textViewCadastro"
-        app:layout_constraintTop_toBottomOf="@+id/tILPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/tILPasswordLogin" />
 
     <TextView
         android:id="@+id/textViewCadastro"
