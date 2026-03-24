@@ -7,9 +7,14 @@
 
 
         <item name="android:statusBarColor">@color/primaria</item>
+        <item name="android:actionOverflowButtonStyle">
+            @style/ActionOverFlowButton
+        </item>
 
     </style>
 
-
+    <style name="ActionOverFlowButton" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:tint">@color/white</item>
+    </style>
     <style name="Theme.Whatsapp" parent="Base.Theme.Whatsapp" />
 </resources>

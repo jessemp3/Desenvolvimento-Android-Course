@@ -44,6 +44,11 @@ class LoginActivity : AppCompatActivity() {
         verificarUsuarioLogado()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+//        firebaseAuth.signOut()
+    }
+
     private fun verificarUsuarioLogado() {
         val userAtual = firebaseAuth.currentUser
         if(userAtual != null){
