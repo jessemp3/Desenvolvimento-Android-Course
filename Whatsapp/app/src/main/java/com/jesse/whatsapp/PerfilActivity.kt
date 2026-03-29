@@ -1,6 +1,7 @@
 package com.jesse.whatsapp
 
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -10,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
 import com.jesse.whatsapp.databinding.ActivityPerfilBinding
 import com.jesse.whatsapp.util.exibirMensagens
 import com.jesse.whatsapp.util.setup
@@ -19,6 +22,15 @@ class PerfilActivity : AppCompatActivity() {
         ActivityPerfilBinding.inflate(layoutInflater)
     }
 
+    private val firebaseAuth by lazy {
+        FirebaseAuth.getInstance()
+    }
+
+    private val storate by lazy {
+        FirebaseStorage.getInstance()
+    }
+
+
     private var temPermisaoGaleria = false
     private var temPermisaoCamera = false
 
@@ -27,6 +39,7 @@ class PerfilActivity : AppCompatActivity() {
     ){uri ->
         if(uri != null){
             binding.imageViewPerfil.setImageURI(uri)
+            uploadImageStorage(uri)
         }else{
            exibirMensagens("Erro ao selecionar imagem")
         }
@@ -63,6 +76,25 @@ class PerfilActivity : AppCompatActivity() {
                 exibirMensagens("Não tem Permisão para acessar a galeria")
                 solicitarPermisoes()
             }
+        }
+    }
+
+    fun uploadImageStorage(uri: Uri) {
+
+        val idUser = firebaseAuth.currentUser?.uid
+        if (idUser != null) {
+            // fotos -> usuarisio -> iduser -> perfil.jpg
+            storate.getReference("fotos")
+                .child("usuarios")
+                .child(idUser)
+                .child("perfil.jpg")
+                .putFile(uri)
+                .addOnSuccessListener { task ->
+
+                    exibirMensagens("Sucesso ao fazer upload da imagem")
+                }.addOnFailureListener {
+                    exibirMensagens("Erro ao fazer upload da imagem")
+                }
         }
     }
 
