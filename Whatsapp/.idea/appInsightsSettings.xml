@@ -22,10 +22,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.jesse.whatsapp" />
+                  <option name="mobileSdkAppId" value="1:959894880399:android:6106e55166a6bf5d1d30fa" />
+                  <option name="projectId" value="whatsapp-6f1c5" />
+                  <option name="projectNumber" value="959894880399" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
