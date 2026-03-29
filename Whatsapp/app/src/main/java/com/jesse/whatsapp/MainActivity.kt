@@ -11,7 +11,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
+import com.jesse.whatsapp.adapters.ViewPagerAdapter
 import com.jesse.whatsapp.databinding.ActivityMainBinding
 import com.jesse.whatsapp.util.setup
 
@@ -33,6 +36,8 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        initNavigation()
 
         with(binding) {
             includeMainToolbar.setup(
@@ -71,6 +76,28 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
+    }
+
+    private fun initNavigation() {
+        val tabLayout = binding.tabLayout
+        val viewPager = binding.viewPagerPrincipal
+
+        //adapert
+
+        val abas =  listOf("Conversas" , "Contatos")
+        viewPager.adapter = ViewPagerAdapter(
+            abas,
+            supportFragmentManager,
+            lifecycle
+        )
+
+        tabLayout.isTabIndicatorFullWidth = true
+        TabLayoutMediator(
+            tabLayout,
+            viewPager
+        ){aba , posicao ->
+            aba.text = abas[posicao]
+        }.attach()
     }
 
 
