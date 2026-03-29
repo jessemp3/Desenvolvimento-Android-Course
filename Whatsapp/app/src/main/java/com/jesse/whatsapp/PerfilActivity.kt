@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.jesse.whatsapp.databinding.ActivityPerfilBinding
+import com.jesse.whatsapp.util.exibirMensagens
 import com.jesse.whatsapp.util.setup
 
 class PerfilActivity : AppCompatActivity() {
@@ -20,6 +21,16 @@ class PerfilActivity : AppCompatActivity() {
 
     private var temPermisaoGaleria = false
     private var temPermisaoCamera = false
+
+    private val gerenciadorGaleria = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ){uri ->
+        if(uri != null){
+            binding.imageViewPerfil.setImageURI(uri)
+        }else{
+           exibirMensagens("Erro ao selecionar imagem")
+        }
+    }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +44,7 @@ class PerfilActivity : AppCompatActivity() {
         }
 
         solicitarPermisoes()
+        initClicks()
 
         binding.includePerfilToolbar.setup(
             title = "Perfil",
@@ -40,6 +52,18 @@ class PerfilActivity : AppCompatActivity() {
                 finish()
             }
         )
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun initClicks() {
+        binding.fabAdd.setOnClickListener {
+            if (temPermisaoGaleria) {
+                gerenciadorGaleria.launch("image/*")
+            }else{
+                exibirMensagens("Não tem Permisão para acessar a galeria")
+                solicitarPermisoes()
+            }
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
