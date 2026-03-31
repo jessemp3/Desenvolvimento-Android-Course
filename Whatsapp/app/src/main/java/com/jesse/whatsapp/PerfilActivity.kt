@@ -11,7 +11,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.common.io.Files.map
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.jesse.whatsapp.databinding.ActivityPerfilBinding
 import com.jesse.whatsapp.util.exibirMensagens
@@ -29,6 +31,11 @@ class PerfilActivity : AppCompatActivity() {
     private val storate by lazy {
         FirebaseStorage.getInstance()
     }
+
+    private val firestore by lazy {
+        FirebaseFirestore.getInstance()
+    }
+
 
 
     private var temPermisaoGaleria = false
@@ -77,6 +84,22 @@ class PerfilActivity : AppCompatActivity() {
                 solicitarPermisoes()
             }
         }
+
+        binding.btnSalvar.setOnClickListener {
+            val nomeUser = binding.editTextNome.text.toString()
+
+            if(nomeUser.isNotEmpty()){
+                val idUser = firebaseAuth.currentUser?.uid
+                if(idUser == null) return@setOnClickListener
+
+                val dados = mapOf(
+                    "nome" to nomeUser,
+                )
+                atualizarDadosPerfil(idUser , dados)
+            }else{
+                exibirMensagens("Digite um nome")
+            }
+        }
     }
 
     fun uploadImageStorage(uri: Uri) {
@@ -90,12 +113,35 @@ class PerfilActivity : AppCompatActivity() {
                 .child("perfil.jpg")
                 .putFile(uri)
                 .addOnSuccessListener { task ->
-
                     exibirMensagens("Sucesso ao fazer upload da imagem")
+                    task.metadata
+                        ?.reference
+                        ?.downloadUrl
+                        ?.addOnSuccessListener { uri ->
+                            val dados = mapOf(
+                                "foto" to uri.toString(),
+                            )
+                            atualizarDadosPerfil(idUser , dados )
+                        }
+                        ?.addOnFailureListener {  }
+
+
                 }.addOnFailureListener {
                     exibirMensagens("Erro ao fazer upload da imagem")
                 }
         }
+    }
+
+    fun atualizarDadosPerfil(idUser: String, dados: Map<String, String>) {
+        firestore.collection("usuarios")
+            .document(idUser)
+            .update(dados)
+            .addOnSuccessListener {
+                exibirMensagens("Dados do perfil atualizado com sucesso")
+            }
+            .addOnFailureListener {
+                exibirMensagens("Erro ao atualizar os dados do perfil")
+            }
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
