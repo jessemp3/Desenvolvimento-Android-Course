@@ -11,15 +11,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.google.common.io.Files.map
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.jesse.whatsapp.databinding.ActivityPerfilBinding
 import com.jesse.whatsapp.util.exibirMensagens
 import com.jesse.whatsapp.util.setup
-import androidx.core.net.toUri
-import com.bumptech.glide.Glide
 
 class PerfilActivity : AppCompatActivity() {
     private val binding by lazy {
@@ -48,7 +46,10 @@ class PerfilActivity : AppCompatActivity() {
         ActivityResultContracts.GetContent()
     ){uri ->
         if(uri != null){
-            binding.imageViewPerfil.setImageURI(uri)
+            Glide.with(this)
+                .load(uri)
+                .error(R.drawable.perfil)
+                .into(binding.imageViewPerfil)
             uploadImageStorage(uri)
         }else{
            exibirMensagens("Erro ao selecionar imagem")
@@ -96,12 +97,17 @@ class PerfilActivity : AppCompatActivity() {
                 if(nome != null){
                     binding.editTextNome.setText(nome)
                 }
+
                 if(foto != null){
-                    Glide
-                        .with(this)
+                    Glide.with(this)
                         .load(foto)
+                        .error(R.drawable.perfil)
                         .into(binding.imageViewPerfil)
+
                 }
+            }
+            .addOnFailureListener {
+                exibirMensagens("Erro ao recuperar dados do usuário")
             }
     }
 
