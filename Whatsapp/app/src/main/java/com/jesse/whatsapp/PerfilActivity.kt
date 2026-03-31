@@ -18,6 +18,8 @@ import com.google.firebase.storage.FirebaseStorage
 import com.jesse.whatsapp.databinding.ActivityPerfilBinding
 import com.jesse.whatsapp.util.exibirMensagens
 import com.jesse.whatsapp.util.setup
+import androidx.core.net.toUri
+import com.bumptech.glide.Glide
 
 class PerfilActivity : AppCompatActivity() {
     private val binding by lazy {
@@ -40,6 +42,7 @@ class PerfilActivity : AppCompatActivity() {
 
     private var temPermisaoGaleria = false
     private var temPermisaoCamera = false
+    private val idUser = firebaseAuth.currentUser?.uid
 
     private val gerenciadorGaleria = registerForActivityResult(
         ActivityResultContracts.GetContent()
@@ -74,6 +77,34 @@ class PerfilActivity : AppCompatActivity() {
         )
     }
 
+    override fun onStart() {
+        super.onStart()
+        recuperarDadosIniciais()
+    }
+
+    private fun recuperarDadosIniciais() {
+        if(idUser == null) return
+
+        firestore
+            .collection("usuarios")
+            .document(idUser)
+            .get()
+            .addOnSuccessListener {documentSnapshot ->
+                val nome = documentSnapshot.getString("nome")
+                val foto = documentSnapshot.getString("foto")
+
+                if(nome != null){
+                    binding.editTextNome.setText(nome)
+                }
+                if(foto != null){
+                    Glide
+                        .with(this)
+                        .load(foto)
+                        .into(binding.imageViewPerfil)
+                }
+            }
+    }
+
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun initClicks() {
         binding.fabAdd.setOnClickListener {
@@ -89,7 +120,6 @@ class PerfilActivity : AppCompatActivity() {
             val nomeUser = binding.editTextNome.text.toString()
 
             if(nomeUser.isNotEmpty()){
-                val idUser = firebaseAuth.currentUser?.uid
                 if(idUser == null) return@setOnClickListener
 
                 val dados = mapOf(
@@ -103,8 +133,6 @@ class PerfilActivity : AppCompatActivity() {
     }
 
     fun uploadImageStorage(uri: Uri) {
-
-        val idUser = firebaseAuth.currentUser?.uid
         if (idUser != null) {
             // fotos -> usuarisio -> iduser -> perfil.jpg
             storate.getReference("fotos")
