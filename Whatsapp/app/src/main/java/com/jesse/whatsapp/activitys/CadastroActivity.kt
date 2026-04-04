@@ -1,21 +1,18 @@
-package com.jesse.whatsapp
+package com.jesse.whatsapp.activitys
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthActionCodeException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWebException
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
+import com.jesse.whatsapp.R
 import com.jesse.whatsapp.databinding.ActivityCadastroBinding
 import com.jesse.whatsapp.model.Usuario
 import com.jesse.whatsapp.util.exibirMensagens

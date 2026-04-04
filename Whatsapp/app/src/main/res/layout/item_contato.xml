@@ -2,9 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clItemContato"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    >
+    android:clickable="true">
 
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -23,8 +24,8 @@
         android:id="@+id/textViewContatoNome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Jose Luiz"
         android:layout_marginStart="16dp"
+        android:text="Jose Luiz"
         app:layout_constraintBottom_toBottomOf="@+id/imageViewContatoPerfil"
         app:layout_constraintStart_toEndOf="@+id/imageViewContatoPerfil"
         app:layout_constraintTop_toTopOf="@+id/imageViewContatoPerfil" />

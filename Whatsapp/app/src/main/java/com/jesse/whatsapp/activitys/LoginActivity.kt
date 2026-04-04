@@ -1,4 +1,4 @@
-package com.jesse.whatsapp
+package com.jesse.whatsapp.activitys
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,7 +9,6 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.jesse.whatsapp.databinding.ActivityLoginBinding
 import com.jesse.whatsapp.util.exibirMensagens
 

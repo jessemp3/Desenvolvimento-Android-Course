@@ -1,4 +1,4 @@
-package com.jesse.whatsapp
+package com.jesse.whatsapp.activitys
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,9 +11,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
+import com.jesse.whatsapp.R
 import com.jesse.whatsapp.adapters.ViewPagerAdapter
 import com.jesse.whatsapp.databinding.ActivityMainBinding
 import com.jesse.whatsapp.util.setup

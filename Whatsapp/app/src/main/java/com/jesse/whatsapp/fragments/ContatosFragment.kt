@@ -1,5 +1,6 @@
 package com.jesse.whatsapp.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
+import com.jesse.whatsapp.activitys.MensagensActivity
 import com.jesse.whatsapp.adapters.ContatosAdapter
 import com.jesse.whatsapp.databinding.FragmentContatosBinding
 import com.jesse.whatsapp.model.Usuario
+import com.jesse.whatsapp.util.Constantes
 
 
 class ContatosFragment : Fragment() {
@@ -36,7 +39,12 @@ class ContatosFragment : Fragment() {
     ): View {
         binding = FragmentContatosBinding.inflate(inflater, container, false)
 
-        adapter = ContatosAdapter()
+        adapter = ContatosAdapter{ usuario ->
+             val intent = Intent(requireContext(), MensagensActivity::class.java)
+                 .putExtra("dadosDestinatario" , usuario)
+                 .putExtra("origem" , Constantes.ORIGEM_CONTATO)
+            startActivity(intent)
+        }
         binding.rvContatos.adapter = adapter
         binding.rvContatos.layoutManager = LinearLayoutManager(requireContext())
         binding.rvContatos.addItemDecoration(

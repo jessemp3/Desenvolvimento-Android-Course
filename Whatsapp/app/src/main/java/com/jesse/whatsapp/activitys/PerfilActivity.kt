@@ -1,5 +1,6 @@
-package com.jesse.whatsapp
+package com.jesse.whatsapp.activitys
 
+import android.Manifest
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -15,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.jesse.whatsapp.R
 import com.jesse.whatsapp.databinding.ActivityPerfilBinding
 import com.jesse.whatsapp.util.exibirMensagens
 import com.jesse.whatsapp.util.setup
@@ -183,22 +185,22 @@ class PerfilActivity : AppCompatActivity() {
         //verificar se já tem a permisao
         temPermisaoCamera = ContextCompat.checkSelfPermission(
             this,
-            android.Manifest.permission.CAMERA
+            Manifest.permission.CAMERA
         ) == PackageManager.PERMISSION_GRANTED
 
         temPermisaoGaleria = ContextCompat.checkSelfPermission(
             this,
-            android.Manifest.permission.READ_MEDIA_IMAGES
+            Manifest.permission.READ_MEDIA_IMAGES
         ) == PackageManager.PERMISSION_GRANTED
 
 
         // lista de negadas
         val listaPermisoesNegadas = mutableListOf<String>()
         if(!temPermisaoCamera ){
-            listaPermisoesNegadas.add(android.Manifest.permission.CAMERA)
+            listaPermisoesNegadas.add(Manifest.permission.CAMERA)
         }
         if(!temPermisaoGaleria){
-            listaPermisoesNegadas.add(android.Manifest.permission.READ_MEDIA_IMAGES)
+            listaPermisoesNegadas.add(Manifest.permission.READ_MEDIA_IMAGES)
         }
 
         if(listaPermisoesNegadas.isNotEmpty()){
@@ -206,8 +208,8 @@ class PerfilActivity : AppCompatActivity() {
             val gerenciadorPermisoes = registerForActivityResult(
                 ActivityResultContracts.RequestMultiplePermissions()
             ){permisoes ->
-                temPermisaoCamera = permisoes[android.Manifest.permission.CAMERA] ?: temPermisaoCamera
-                temPermisaoGaleria = permisoes[android.Manifest.permission.READ_MEDIA_IMAGES] ?: temPermisaoGaleria
+                temPermisaoCamera = permisoes[Manifest.permission.CAMERA] ?: temPermisaoCamera
+                temPermisaoGaleria = permisoes[Manifest.permission.READ_MEDIA_IMAGES] ?: temPermisaoGaleria
             }
 
             gerenciadorPermisoes.launch(listaPermisoesNegadas.toTypedArray())

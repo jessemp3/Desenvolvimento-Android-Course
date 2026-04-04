@@ -7,7 +7,9 @@ import com.bumptech.glide.Glide
 import com.jesse.whatsapp.databinding.ItemContatoBinding
 import com.jesse.whatsapp.model.Usuario
 
-class ContatosAdapter : RecyclerView.Adapter<ContatosAdapter.ContatosViewHolder>() {
+class ContatosAdapter(
+    private val onClick: (Usuario) -> Unit
+) : RecyclerView.Adapter<ContatosAdapter.ContatosViewHolder>() {
 
     private var listaContatos = emptyList<Usuario>()
     fun adicionarLista(lista: List<Usuario>) {
@@ -24,6 +26,10 @@ class ContatosAdapter : RecyclerView.Adapter<ContatosAdapter.ContatosViewHolder>
             Glide.with(binding.root)
                 .load(usuario.foto)
                 .into(binding.imageViewContatoPerfil)
+
+            binding.clItemContato.setOnClickListener {
+                onClick(usuario)
+            }
         }
     }
 
