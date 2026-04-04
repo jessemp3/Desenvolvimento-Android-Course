@@ -7,4 +7,42 @@
     android:layout_height="match_parent"
     tools:context=".activitys.MensagensActivity">
 
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/materialToolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_back" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageViewPerfilMensagem"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="centerCrop"
+        android:layout_marginStart="50dp"
+        app:layout_constraintBottom_toBottomOf="@+id/materialToolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/Ciruclo"
+        app:srcCompat="@drawable/perfil" />
+
+    <TextView
+        android:id="@+id/textViewTitleNameMensagem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nome"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewPerfilMensagem"
+        app:layout_constraintStart_toEndOf="@+id/imageViewPerfilMensagem"
+        app:layout_constraintTop_toTopOf="@+id/imageViewPerfilMensagem" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

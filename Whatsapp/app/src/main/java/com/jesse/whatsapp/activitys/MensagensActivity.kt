@@ -2,8 +2,10 @@ package com.jesse.whatsapp.activitys
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.jesse.whatsapp.R
@@ -36,10 +38,15 @@ class MensagensActivity : AppCompatActivity() {
         if (extras != null) {
             val origem = extras.getString("origem")
             if (origem == Constantes.ORIGEM_CONTATO) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    dadosDestinatario = extras.getParcelable("dadosDestinatario" , Usuario::class.java)
+                dadosDestinatario = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    extras.getParcelable("dadosDestinatario" , Usuario::class.java)
+                }else{
+                    extras.getParcelable(
+                        "dadosDestinatario"
+                    )
                 }
-
+                Log.d("TAG", "recuperarDadosUsuarioDestinatario: $dadosDestinatario")
+                binding.textViewTitleNameMensagem.text = dadosDestinatario?.nome
             }else if(origem == Constantes.ORIGEM_CONVERSA){
 //
                 }
