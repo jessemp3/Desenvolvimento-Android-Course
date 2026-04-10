@@ -21,9 +21,7 @@
         android:theme="@style/Theme.Whatsapp">
         <activity
             android:name=".activitys.MensagensActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activitys.MainActivity2"
+            android:parentActivityName=".activitys.MainActivity"
             android:exported="false" />
         <activity
             android:name=".activitys.PerfilActivity"
