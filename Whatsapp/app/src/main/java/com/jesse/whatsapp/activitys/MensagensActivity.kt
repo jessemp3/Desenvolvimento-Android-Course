@@ -13,8 +13,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jesse.whatsapp.R
 import com.jesse.whatsapp.databinding.ActivityMensagensBinding
+import com.jesse.whatsapp.model.Mensagem
 import com.jesse.whatsapp.model.Usuario
 import com.jesse.whatsapp.util.Constantes
+import com.jesse.whatsapp.util.exibirMensagens
 
 class MensagensActivity : AppCompatActivity() {
     private val binding by lazy {
@@ -55,14 +57,33 @@ class MensagensActivity : AppCompatActivity() {
     }
 
     fun salvarMensagem(mensagem: String) {
-        val idUsuarioRemetente = firebaseAuth.currentUser?.uid
-        val idUsuarioDestinatario = dadosDestinatario?.id
+      if(mensagem.isNotEmpty()){
+          val idUsuarioRemetente = firebaseAuth.currentUser?.uid
+          val idUsuarioDestinatario = dadosDestinatario?.id
 
-        if(idUsuarioRemetente != null && idUsuarioDestinatario != null){
-            firestore.collection("")
-        }
+          if(idUsuarioRemetente != null && idUsuarioDestinatario != null) {
+              val mensagem = Mensagem(
+                  idUsuarioRemetente,
+                  mensagem
+              )
+              //salvando pro remetente
+              salvarMensagemFireStore(idUsuarioRemetente, idUsuarioDestinatario, mensagem)
+              //salvando pro destinatario
+              salvarMensagemFireStore(idUsuarioDestinatario, idUsuarioRemetente, mensagem)
+          }
 
+      }
 
+    }
+
+    private fun salvarMensagemFireStore(idUsuarioRemetente: String, idUsuarioDestinatario: String, mensagem: Mensagem) {
+        firestore.collection(Constantes.MENSAGENS)
+            .document(idUsuarioRemetente) // user logado e quem esta enviado a mensagem
+            .collection(idUsuarioDestinatario) // destinatario e quem esta recebendo a mensagem
+            .add(mensagem)
+            .addOnFailureListener {
+                exibirMensagens("Falha ao enviar mensagem")
+            }
     }
 
     private fun iniciarlizarToolbar() {
