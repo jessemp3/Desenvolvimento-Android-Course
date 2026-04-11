@@ -9,6 +9,8 @@ import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.jesse.whatsapp.R
 import com.jesse.whatsapp.databinding.ActivityMensagensBinding
 import com.jesse.whatsapp.model.Usuario
@@ -17,6 +19,15 @@ import com.jesse.whatsapp.util.Constantes
 class MensagensActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityMensagensBinding.inflate(layoutInflater)
+    }
+
+
+    private val firebaseAuth by lazy {
+        FirebaseAuth.getInstance()
+    }
+
+    private val firestore by lazy {
+        FirebaseFirestore.getInstance()
     }
 
     private var dadosDestinatario: Usuario? = null
@@ -33,6 +44,25 @@ class MensagensActivity : AppCompatActivity() {
 
         recuperarDadosUsuarioDestinatario()
         iniciarlizarToolbar()
+        initClicks()
+    }
+
+    private fun initClicks() {
+        binding.fabEnviar.setOnClickListener {
+            val mensagem = binding.editTextMensagem.text.toString()
+            salvarMensagem(mensagem)
+        }
+    }
+
+    fun salvarMensagem(mensagem: String) {
+        val idUsuarioRemetente = firebaseAuth.currentUser?.uid
+        val idUsuarioDestinatario = dadosDestinatario?.id
+
+        if(idUsuarioRemetente != null && idUsuarioDestinatario != null){
+            firestore.collection("")
+        }
+
+
     }
 
     private fun iniciarlizarToolbar() {
