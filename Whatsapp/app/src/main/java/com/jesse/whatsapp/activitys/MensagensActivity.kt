@@ -11,6 +11,8 @@ import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.firestore.Query
 import com.jesse.whatsapp.R
 import com.jesse.whatsapp.databinding.ActivityMensagensBinding
 import com.jesse.whatsapp.model.Mensagem
@@ -33,6 +35,7 @@ class MensagensActivity : AppCompatActivity() {
     }
 
     private var dadosDestinatario: Usuario? = null
+    private lateinit var snapshotListener: ListenerRegistration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +50,47 @@ class MensagensActivity : AppCompatActivity() {
         recuperarDadosUsuarioDestinatario()
         iniciarlizarToolbar()
         initClicks()
+        inicializarListeners()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        snapshotListener.remove()
+    }
+
+    private fun inicializarListeners() {
+        val idUsuarioRemetente = firebaseAuth.currentUser?.uid
+        val idUsuarioDestinatario = dadosDestinatario?.id
+
+        if(idUsuarioRemetente != null && idUsuarioDestinatario != null) {
+          snapshotListener = firestore.collection(Constantes.MENSAGENS)
+                .document(idUsuarioRemetente)
+                .collection(idUsuarioDestinatario)
+                .orderBy("data", Query.Direction.ASCENDING)
+                .addSnapshotListener { snapshots, exception ->
+                    if(exception != null){
+                        exibirMensagens("Erro ao carregar mensagens")
+                        return@addSnapshotListener
+                    }
+
+                    val listaMensagens = mutableListOf<Mensagem>()
+                    val documentos = snapshots?.documents
+
+                    documentos?.forEach { documento ->
+                        val mensagem = documento.toObject(Mensagem::class.java)
+
+                        if(mensagem != null){
+                            listaMensagens.add(mensagem)
+                            Log.d("TAG", "inicializarListeners: ${mensagem.mensagem}")
+                        }
+                    }
+
+                    // lista
+                    if(listaMensagens.isNotEmpty()){
+
+                    }
+                }
+        }
     }
 
     private fun initClicks() {
@@ -70,6 +114,9 @@ class MensagensActivity : AppCompatActivity() {
               salvarMensagemFireStore(idUsuarioRemetente, idUsuarioDestinatario, mensagem)
               //salvando pro destinatario
               salvarMensagemFireStore(idUsuarioDestinatario, idUsuarioRemetente, mensagem)
+
+              binding.editTextMensagem.setText("")
+
           }
 
       }
