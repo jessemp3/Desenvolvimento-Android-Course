@@ -36,9 +36,9 @@ class MensagensActivity : AppCompatActivity() {
         FirebaseFirestore.getInstance()
     }
 
-    private var dadosDestinatario: Usuario? = null
+    private  var dadosDestinatario: Usuario? = null
     private var dadosUsuarioRementente: Usuario? = null
-    private lateinit var snapshotListener: ListenerRegistration
+    private var snapshotListener: ListenerRegistration? = null
     private lateinit var conversasAdapter: MensagensAdapter
 
 
@@ -64,14 +64,14 @@ class MensagensActivity : AppCompatActivity() {
         with(binding) {
             conversasAdapter = MensagensAdapter()
             recyclerViewMensagens.adapter = conversasAdapter
-            recyclerViewMensagens.layoutManager = LinearLayoutManager(applicationContext)
+            recyclerViewMensagens.layoutManager = LinearLayoutManager(this@MensagensActivity)
         }
 
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        snapshotListener.remove()
+        snapshotListener?.remove()
     }
 
     private fun inicializarListeners() {
@@ -102,9 +102,8 @@ class MensagensActivity : AppCompatActivity() {
                     }
 
                     // lista
-                    if (listaMensagens.isNotEmpty()) {
                         conversasAdapter.adicionarLista(listaMensagens)
-                    }
+
                 }
         }
     }
@@ -119,6 +118,7 @@ class MensagensActivity : AppCompatActivity() {
     private fun salvarMensagem(textoMensagem: String) {
         if (textoMensagem.isNotEmpty()) {
 
+
             val idUsuarioRemetente = firebaseAuth.currentUser?.uid
             val idUsuarioDestinatario = dadosDestinatario?.id
             if (idUsuarioRemetente != null && idUsuarioDestinatario != null) {
@@ -126,38 +126,45 @@ class MensagensActivity : AppCompatActivity() {
                     idUsuarioRemetente, textoMensagem
                 )
 
-                //Salvar para o Remetente
-                salvarMensagemFirestore(
-                    idUsuarioRemetente, idUsuarioDestinatario, mensagem
-                )
-                //Jamilton -> Foto e nome Destinatario (ana)
-                val conversaRemetente = Conversa(
-                    idUsuarioRemetente, idUsuarioDestinatario,
-                    dadosDestinatario!!.foto, dadosDestinatario!!.nome,
-                    textoMensagem
-                )
-                salvarConversaFirestore(conversaRemetente)
+                if (dadosDestinatario == null || dadosUsuarioRementente == null) {
+                    return exibirMensagens("Destinatário não encontrado")
+                } else {
 
-                //Salvar mesma mensagem para o destinatario
-                salvarMensagemFirestore(
-                    idUsuarioDestinatario, idUsuarioRemetente, mensagem
-                )
-                //Ana -> Foto e nome Remente (jamilton)
-                val conversaDestinatario = Conversa(
-                    idUsuarioDestinatario, idUsuarioRemetente,
-                    dadosUsuarioRementente!!.foto, dadosUsuarioRementente!!.nome,
-                    textoMensagem
-                )
-                salvarConversaFirestore(conversaDestinatario)
+                    //Salvar para o Remetente
+                    salvarMensagemFirestore(
+                        idUsuarioRemetente, idUsuarioDestinatario, mensagem
+                    )
+                    //Jamilton -> Foto e nome Destinatario (ana)
+                    val conversaRemetente = Conversa(
+                        idUsuarioRemetente, idUsuarioDestinatario,
+                        dadosDestinatario?.foto, dadosDestinatario!!.nome,
+                        textoMensagem
+                    )
+                    salvarConversaFirestore(conversaRemetente)
 
-                binding.editTextMensagem.setText("")
+                    //Salvar mesma mensagem para o destinatario
+                    salvarMensagemFirestore(
+                        idUsuarioDestinatario, idUsuarioRemetente, mensagem
+                    )
+                    //Ana -> Foto e nome Remente (jamilton)
+                    val conversaDestinatario = Conversa(
+                        idUsuarioDestinatario, idUsuarioRemetente,
+                        dadosUsuarioRementente?.foto, dadosUsuarioRementente!!.nome,
+                        textoMensagem
+                    )
+                    salvarConversaFirestore(conversaDestinatario)
 
+                    binding.editTextMensagem.setText("")
+
+                }
             }
-
         }
     }
 
     private fun salvarConversaFirestore(conversa: Conversa) {
+
+
+
         firestore
             .collection(Constantes.CONVERSAS)
             .document(conversa.idUsuarioRementente)
@@ -176,12 +183,20 @@ class MensagensActivity : AppCompatActivity() {
         idUsuarioDestinatario: String,
         mensagem: Mensagem
     ) {
+
+        if(idUsuarioRemetente == null || idUsuarioDestinatario == null){
+            Log.d("TAG", "salvarMensagemFirestore: dados do usuario nulos ${dadosDestinatario } - ${dadosUsuarioRementente}" )
+            return exibirMensagens("dados do usuario nulos")
+        }
+
+
         firestore.collection(Constantes.MENSAGENS)
             .document(idUsuarioRemetente) // user logado e quem esta enviado a mensagem
             .collection(idUsuarioDestinatario) // destinatario e quem esta recebendo a mensagem
             .add(mensagem)
-            .addOnFailureListener {
+            .addOnFailureListener { error ->
                 exibirMensagens("Falha ao enviar mensagem")
+                Log.e("firestore_write", "erro ao salvar", error)
             }
     }
 
@@ -222,27 +237,39 @@ class MensagensActivity : AppCompatActivity() {
 
         //Recuperando dados destinatário
         val extras = intent.extras
-        if (extras != null) {
+//        if (extras != null) {
+//
+//            val origem = extras.getString("origem")
+//            if (origem == Constantes.ORIGEM_CONTATO) {
+//
+//                dadosDestinatario = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//                    extras.getParcelable<Usuario>(
+//                        "dadosDestinatario",
+//                        Usuario::class.java
+//                    )
+//                } else {
+//                    extras.getParcelable<Usuario>(
+//                        "dadosDestinatario"
+//                    )
+//                }
+//
+//            } else if (origem == Constantes.ORIGEM_CONVERSA) {
+//
+//            }
+//
+//        }
 
-            val origem = extras.getString("origem")
-            if (origem == Constantes.ORIGEM_CONTATO) {
-
-                dadosDestinatario = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    extras.getParcelable(
-                        "dadosDestinatario",
-                        Usuario::class.java
-                    )
-                } else {
-                    extras.getParcelable(
-                        "dadosDestinatario"
-                    )
-                }
-
-            } else if (origem == Constantes.ORIGEM_CONVERSA) {
-                //Recuperar os dados da conversa
-
-            }
-
+        if(extras != null){
+            dadosDestinatario = (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                extras.getParcelable<Usuario>(
+                    "dadosDestinatario",
+                    Usuario::class.java
+                )
+            } else {
+                extras.getParcelable<Usuario>(
+                    "dadosDestinatario"
+                )
+            })!!
         }
 
     }

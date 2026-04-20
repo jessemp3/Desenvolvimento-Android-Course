@@ -4,6 +4,8 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
          <item name="colorPrimary">@color/primaria</item>
+        <item name="android:navigationBarColor">@color/primaria</item>
+        <item name="bottomAppBarStyle">@style/BottomAppBarStyle</item>
 
 
         <item name="android:statusBarColor">@color/primaria</item>
@@ -19,6 +21,11 @@
 
     <style name="Ciruclo">
         <item name="cornerSize">50%</item>
+    </style>
+
+
+    <style name="BottomAppBarStyle" parent="Widget.MaterialComponents.BottomAppBar">
+        <item name="backgroundTint">@color/primaria</item>
     </style>
 
     <style name="Theme.Whatsapp" parent="Base.Theme.Whatsapp" />
